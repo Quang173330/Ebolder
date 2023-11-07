@@ -183,6 +183,7 @@ export default {
                 this.selectedAnswers = {};
                 this.correctAnswers = {};
                 this.selectedIndex = 0;
+                this.questionCount = 0;
 
                 this.selectedQuestion = newQuestions[this.selectedIndex];
                 newQuestions.forEach(question => {

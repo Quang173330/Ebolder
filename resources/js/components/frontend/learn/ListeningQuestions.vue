@@ -298,6 +298,7 @@ export default {
             this.selectedIndex = 0;
             this.selectedTopicIndex = 0;
             this.questions = {}
+            this.questionCount = 0;
             if (newTopics && newTopics.length) {
                 this.selectedTopic = newTopics[this.selectedTopicIndex];
                 this.getAudioDetail(this.selectedTopic?.id);

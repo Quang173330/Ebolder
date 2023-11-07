@@ -994,7 +994,7 @@ export default {
           } else {
             this.$message({
               type: "error",
-              message: "Updated falied",
+              message: "Updated Failed",
             });
           }
         } catch (error) {

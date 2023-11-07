@@ -296,7 +296,7 @@ class VocabularyController extends Controller
             return [
                 "status" => 200,
                 "errorCode" => 0,
-                "message" => "Thêm câu hỏi thành công !"
+                "message" => "Successful!"
             ];
         } catch (\Exception $e) {
             Log::error($e);
@@ -304,7 +304,7 @@ class VocabularyController extends Controller
             return [
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Thêm câu hỏi thất bại !"
+                "message" => "Failed !"
             ];
         }
 

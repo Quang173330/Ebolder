@@ -530,7 +530,7 @@ export default {
                 }
             });
         }
-        this.$refs[formNameItem].forEach((item) => {
+        this.$refs?.[formNameItem]?.forEach((item) => {
           item.validate((valid) => {
             if (!valid) {
               isCheck = false;
@@ -540,7 +540,7 @@ export default {
             }
           });
         });
-        this.$refs[formNameData].forEach((item) => {
+        this.$refs?.[formNameData]?.forEach((item) => {
           item.validate((valid) => {
             if (!valid) {
               isCheck = false;

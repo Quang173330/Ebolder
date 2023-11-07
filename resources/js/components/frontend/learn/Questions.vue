@@ -18,6 +18,7 @@
                         <input v-else type="text"
                                 @input="(event) => handleAnswerInput(event, selectedQuestion, index)"
                                 v-model="inputAnswerValues[`${index}${selectedQuestion?.id}`]"
+                                maxlength="255"
                                 class="
                                     mx-2
                                     border

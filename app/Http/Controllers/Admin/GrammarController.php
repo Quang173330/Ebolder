@@ -40,13 +40,13 @@ class GrammarController extends Controller
                 "status" => 200,
                 "errorCode" => 0,
                 "data" => $data,
-                "message" => "Lấy danh sách topic thành công !"
+                "message" => "Successful!"
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Lấy danh sách topic thất bại !"
+                "message" => "Failed!"
             ]);
         }
     }
@@ -67,13 +67,13 @@ class GrammarController extends Controller
                 "status" => 200,
                 "errorCode" => 0,
                 "data" => $data,
-                "message" => "Lấy chi tiết topic thành công !"
+                "message" => "Successfull!"
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Lấy chi tiết topic thất bại !"
+                "message" => "Failed!"
             ]);
         }
 
@@ -148,13 +148,13 @@ class GrammarController extends Controller
             return response()->json([
                 "status" => 200,
                 "errorCode" => 0,
-                "message" => "Thêm câu hỏi vào topic thành công !"
+                "message" => "Successful!"
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Thêm câu hỏi vào topic thất bại !"
+                "message" => "Failed!"
             ]);
         }
     }
@@ -191,7 +191,7 @@ class GrammarController extends Controller
             return response()->json([
                 "status" => 200,
                 "errorCode" => 0,
-                "message" => "Xóa topic thành công !"
+                "message" => "Successful!"
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -216,13 +216,13 @@ class GrammarController extends Controller
             return response()->json([
                 "status" => 200,
                 "errorCode" => 0,
-                "message" => "Sửa topic thành công !"
+                "message" => "Successful!"
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Sửa topic thất bại !"
+                "message" => "Failed!"
             ]);
         }
 
@@ -253,7 +253,7 @@ class GrammarController extends Controller
                 "status" => $e->getCode(),
                 "errorCode" => $e->getCode(),
                 "data" => null,
-                "message" => $e->getMessage()
+                "message" => "Failed!"
             ]);
         }
 
@@ -376,7 +376,7 @@ class GrammarController extends Controller
             return [
                 "status" => 200,
                 "errorCode" => 0,
-                "message" => "Sửa câu hỏi thành công !"
+                "message" => "Updated successfully!"
             ];
         } catch (\Exception $e) {
             Log::error($e);
@@ -384,7 +384,7 @@ class GrammarController extends Controller
             return [
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Sửa câu hỏi thất bại !"
+                "message" => "Failed!"
             ];
         }
 
@@ -398,13 +398,13 @@ class GrammarController extends Controller
             return [
                 "status" => 200,
                 "errorCode" => 0,
-                "message" => "Xóa câu trả lời thành công !"
+                "message" => "Successful!"
             ];
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return [
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Xóa câu trả lời thất bại !"
+                "message" => "Failed!"
             ];
         }
 
@@ -418,13 +418,13 @@ class GrammarController extends Controller
             return [
                 "status" => 200,
                 "errorCode" => 0,
-                "message" => "Xóa câu hỏi thành công !"
+                "message" => "Successful!"
             ];
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return [
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Xóa câu hỏi thất bại !"
+                "message" => "Failed!"
             ];
         }
 

@@ -77,13 +77,13 @@ class LearnController extends Controller
                 "status" => 200,
                 "errorCode" => 0,
                 "data" => $data,
-                "message" => "Lấy danh sách topic thành công !"
+                "message" => "Successful!"
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Lấy danh sách topic thất bại !"
+                "message" => "Failed!"
             ]);
         }
     }
@@ -118,7 +118,7 @@ class LearnController extends Controller
             return response()->json([
                 "status" => 200,
                 "errorCode" => 0,
-                "message" => "Xóa topic thành công !"
+                "message" => "Successful!"
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -208,14 +208,14 @@ class LearnController extends Controller
                 "status" => 200,
                 "errorCode" => 0,
                 "audio_id" => $lesson->id,
-                "message" => "Thêm bài học Thành công!"
+                "message" => "Successful!"
             ]);
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Thêm bài học Thất bại!"
+                "message" => "Failed!"
             ]);
         }
 
@@ -336,7 +336,7 @@ class LearnController extends Controller
             return response()->json([
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => $e->getMessage()
+                "message" => "Failed!"
             ]);
         }
 

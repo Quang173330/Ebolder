@@ -59,14 +59,14 @@ class ReadController extends Controller
             return [
                 "status" => 200,
                 "errorCode" => 0,
-                "message" => "Thêm topic thành công !"
+                "message" => "Successful!"
             ];
         } catch (\Exception $e) {
             DB::rollBack();
             return [
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Thêm topic thất bại !"
+                "message" => "Failed!"
             ];
         }
 
@@ -117,7 +117,7 @@ class ReadController extends Controller
             return response()->json([
                 "status" => 200,
                 "errorCode" => 0,
-                "message" => "Xóa topic thành công !"
+                "message" => "Successful!"
 
 
             ]);
@@ -146,13 +146,13 @@ class ReadController extends Controller
                 "status" => 200,
                 "errorCode" => 0,
                 "data" => $data,
-                "message" => "Lấy chi tiết topic thành công !"
+                "message" => "Successfull!"
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Lấy chi tiết topic thất bại !"
+                "message" => "Failed!"
             ]);
         }
 
@@ -308,7 +308,7 @@ class ReadController extends Controller
             return response()->json([
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => $e->getMessage()
+                "message" => "Failed!"
             ]);
         }
     }
@@ -399,7 +399,7 @@ class ReadController extends Controller
             return response()->json([
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => $e->getMessage()
+                "message" => "Failed!"
             ]);
         }
 

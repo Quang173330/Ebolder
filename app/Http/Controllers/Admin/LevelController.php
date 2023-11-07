@@ -71,7 +71,7 @@ class LevelController extends Controller
             return response()->json([
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => $e->getMessage()
+                "message" => "Failed!"
             ]);
         }
     }
@@ -113,7 +113,7 @@ class LevelController extends Controller
             return response()->json([
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => $e->getMessage()
+                "message" => "Failed!"
             ]);
         }
 

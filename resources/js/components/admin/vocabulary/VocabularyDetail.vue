@@ -620,7 +620,7 @@ export default {
             }
           });
         }
-        this.$refs[formNameItem].forEach((item) => {
+        this.$refs?.[formNameItem]?.forEach((item) => {
           item.validate((valid) => {
             if (!valid) {
               isCheck = false;
@@ -630,20 +630,16 @@ export default {
             }
           });
         });
-        if (this.dataQuestion[0].type == 2 && this.dataQuestion.length == 1) {
-          return true;
-        } else {
-          this.$refs[formNameData].forEach((item) => {
-            item.validate((valid) => {
-              if (!valid) {
-                isCheck = false;
-              } else {
-                console.log("error submit!!");
-                return false;
-              }
-            });
+        this.$refs?.[formNameData]?.forEach((item) => {
+          item.validate((valid) => {
+            if (!valid) {
+              isCheck = false;
+            } else {
+              console.log("error submit!!");
+              return false;
+            }
           });
-        }
+        });
         return isCheck;
       } else {
         return true;

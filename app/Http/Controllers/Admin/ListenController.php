@@ -40,7 +40,7 @@ class ListenController extends Controller
             $audio = AudioListening::create([
                 'name' => $request->name,
                 'audio' => $file_name,
-                'content' =>$request->content,
+                'content' =>$request->content || ' ',
                 'file_type' => $request->file_type
             ]);
             return response()->json([
@@ -401,7 +401,7 @@ class ListenController extends Controller
         try {
             Listening::create([
                 "name" => $request->name,
-                "description" => $request->description,
+                "description" => $request->description || ' ',
                 "is_exam" => $request->isExam,
             ]);
             return response()->json([

@@ -30,7 +30,7 @@ class PronunciationController extends Controller
             DB::beginTransaction();
             $read = Pronunciation::create([
                 "name" => $request->name,
-                "content" => $request->contentPronunciation,
+                "content" => $request->contentPronunciation || ' ',
                 "is_exam" => $request->isExam
             ]);
             foreach ($request->dataQuestion as $key => $value) {
@@ -313,7 +313,7 @@ class PronunciationController extends Controller
             $pronun = Pronunciation::whereId($request->id)->first();
             $pronun->update([
                 "name" => $request->name,
-                "content" => $request->content,
+                "content" => $request->content || ' ',
                 "is_exam" => $request->is_exam
             ]);
 

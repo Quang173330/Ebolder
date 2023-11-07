@@ -126,7 +126,7 @@
                         ]"
                         class="w-full m-0"
                       >
-                        <Input v-model="item.text">
+                        <Input v-model="item.text" :maxlength="255">
                           <template slot="prepend"
                             >{{ item.alphabet }}
                           </template>
@@ -306,7 +306,7 @@
                         ]"
                         class="w-full m-0"
                       >
-                        <Input v-model="item.text">
+                        <Input v-model="item.text" :maxlength="255">
                           <template slot="prepend"
                             >{{ indexAns + 1 }}
                           </template>

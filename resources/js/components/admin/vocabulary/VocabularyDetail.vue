@@ -179,10 +179,14 @@
                             required: true,
                             message: 'Please enter your answer',
                           },
+                          {
+                            max: 255,
+                            message: 'Your answer must be less than 255 characters',
+                          },
                         ]"
                         class="w-full m-0"
                       >
-                        <Input v-model="item.text">
+                        <Input v-model="item.text" :maxlength="255">
                           <template slot="prepend"
                             >{{ item.alphabet }}
                           </template>
@@ -359,10 +363,14 @@
                             required: true,
                             message: 'Please enter your answer',
                           },
+                          {
+                            max: 255,
+                            message: 'Your answer must be less than 255 characters',
+                          },
                         ]"
                         class="w-full m-0"
                       >
-                        <Input v-model="item.text">
+                        <Input v-model="item.text" :maxlength="255">
                           <template slot="prepend"
                             >{{ indexAns + 1 }}
                           </template>

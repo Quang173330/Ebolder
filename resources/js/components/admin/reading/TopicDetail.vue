@@ -18,14 +18,14 @@
         <el-switch v-model="dataTopic.isExam"></el-switch>
       </div>
       <div class="mb-4">
-        <el-form ref="ruleFormItem" :model="dataTopic" class="w-full">
+        <el-form ref="ruleFormName" :model="dataTopic" class="w-full">
           <el-form-item
             label="Name"
             prop="name"
             :rules="[
               {
                 required: true,
-                message: 'Please enter your answer',
+                message: 'Please enter name topic',
               },
             ]"
             class="w-full m-0"
@@ -131,7 +131,7 @@
                         ]"
                         class="w-full m-0"
                       >
-                        <Input v-model="item.text">
+                        <Input v-model="item.text" :maxlength="255">
                           <template slot="prepend"
                             >{{ item.alphabet }}
                           </template>
@@ -311,7 +311,7 @@
                         ]"
                         class="w-full m-0"
                       >
-                        <Input v-model="item.text">
+                        <Input v-model="item.text" :maxlength="255">
                           <template slot="prepend"
                             >{{ indexAns + 1 }}
                           </template>
@@ -574,36 +574,39 @@ export default {
       return;
     },
     async saveChangeTopic() {
-      try {
-        let dataTemp = {
-          id: this.param,
-          name: this.dataTopic.name,
-          contentReading: this.dataTopic.content,
-          isExam: this.dataTopic.isExam,
-          dataQuestion: this.dataQuestion,
-        };
-        let result = await baseRequest.post(
-          `/admin/update-question-reading`,
-          dataTemp
-        );
-        let { data } = result;
-        if (data.status == 200) {
-          this.getDetailTopic();
-          this.$message({
-            message: data.message,
-            type: "success",
-          });
-          setTimeout(() => {
-            window.location.href = `${$Api.baseUrl}/admin/reading-level-test/topic-detail/${this.param}`;
-          }, 1000);
-        } else {
-          this.$message({
-            message: data.message,
-            type: "error",
-          });
+      let isCheck = this.validate("ruleFormData", "ruleFormItem", "ruleFormName");
+      if (isCheck) {
+        try {
+          let dataTemp = {
+            id: this.param,
+            name: this.dataTopic.name,
+            contentReading: this.dataTopic.content,
+            isExam: this.dataTopic.isExam,
+            dataQuestion: this.dataQuestion,
+          };
+          let result = await baseRequest.post(
+            `/admin/update-question-reading`,
+            dataTemp
+          );
+          let { data } = result;
+          if (data.status == 200) {
+            this.getDetailTopic();
+            this.$message({
+              message: data.message,
+              type: "success",
+            });
+            setTimeout(() => {
+              window.location.href = `${$Api.baseUrl}/admin/reading-level-test/topic-detail/${this.param}`;
+            }, 1000);
+          } else {
+            this.$message({
+              message: data.message,
+              type: "error",
+            });
+          }
+        } catch (error) {
+          console.log("🚀 ~ ~ error", error);
         }
-      } catch (error) {
-        console.log("🚀 ~ ~ error", error);
       }
     },
 
@@ -615,11 +618,17 @@ export default {
         alphabet: this.alphabet[dataQues.dataAns.length].toUpperCase(),
       });
     },
-    validate(formNameItem, formNameData) {
-      if (this.$refs[formNameItem] && this.$refs[formNameData]) {
+    validate(formNameItem, formNameData, ruleFormName) {
+      if (this.$refs[formNameItem] || this.$refs[formNameData] || this.$refs[ruleFormName]) {
         let isCheck = true;
-
-        this.$refs[formNameItem].forEach((item) => {
+        if (ruleFormName) {
+            this.$refs.ruleFormName.validate((valid) => {
+                if (!valid) {
+                    isCheck = false
+                }
+            });
+        }
+        this.$refs?.[formNameItem]?.forEach((item) => {
           item.validate((valid) => {
             if (!valid) {
               isCheck = false;
@@ -629,20 +638,16 @@ export default {
             }
           });
         });
-        if (this.dataQuestion[0].type == 2 && this.dataQuestion.length == 1) {
-          return true;
-        } else {
-          this.$refs[formNameData].forEach((item) => {
-            item.validate((valid) => {
-              if (!valid) {
-                isCheck = false;
-              } else {
-                console.log("error submit!!");
-                return false;
-              }
-            });
+        this.$refs?.[formNameData]?.forEach((item) => {
+          item.validate((valid) => {
+            if (!valid) {
+              isCheck = false;
+            } else {
+              console.log("error submit!!");
+              return false;
+            }
           });
-        }
+        });
         return isCheck;
       } else {
         return true;
@@ -722,39 +727,6 @@ export default {
       this.dataQuestion = this.dataQuestion.filter(
           (item) => item.id != id
       );
-    },
-    async createQuestion(id) {
-      let dataTemp = this.dataQuestion.map((item) => ({
-        id: item.id,
-        audio_id: id,
-        question: item.question,
-        level: item.level,
-        dataAns: item.dataAns,
-        answer: item.answer,
-      }));
-      try {
-        let result = await baseRequest.post(
-          `/admin/add-question-to-audio-listening`,
-          dataTemp
-        );
-        let { data } = result;
-        if (data.status == 200) {
-          this.$message({
-            message: data.message,
-            type: "success",
-          });
-          setTimeout(() => {
-            window.location.href = `${$Api.baseUrl}/admin/listening-level-test/question-list`;
-          }, 1000);
-        } else {
-          this.$message({
-            message: data.message,
-            type: "error",
-          });
-        }
-      } catch (error) {
-        console.log("🚀 ~ ~ error", error);
-      }
     },
     getAlphabet(data, idAnswer) {
       let index = data.findIndex((item) => {

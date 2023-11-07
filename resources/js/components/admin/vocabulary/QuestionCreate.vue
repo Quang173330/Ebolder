@@ -154,10 +154,14 @@
                                                         message:
                                                             'Please enter your answer',
                                                     },
+                                                    {
+                                                        max: 255,
+                                                        message: 'Your answer must be less than 255 characters',
+                                                    },
                                                 ]"
                                                 class="w-full m-0"
                                             >
-                                                <Input v-model="item.text">
+                                                <Input v-model="item.text" :maxlength="255">
                                                     <template slot="prepend">{{
                                                         item.alphabet
                                                     }}</template>
@@ -317,10 +321,14 @@
                                                         message:
                                                             'Please enter your answer',
                                                     },
+                                                    {
+                                                        max: 255,
+                                                        message: 'Your answer must be less than 255 characters',
+                                                    },
                                                 ]"
                                                 class="w-full m-0"
                                             >
-                                                <Input v-model="item.text">
+                                                <Input v-model="item.text" :maxlength="255">
                                                     <template slot="prepend"
                                                         >{{ item.alphabet }}
                                                     </template>
@@ -449,7 +457,6 @@ export default {
                         }
                     });
                 }
-
                 this.$refs?.[formNameItem]?.forEach((item) => {
                     item.validate((valid) => {
                         if (!valid) {
@@ -460,23 +467,16 @@ export default {
                         }
                     });
                 });
-                if (
-                    this.dataQuestion?.[0]?.type == 2 &&
-                    this.dataQuestion?.length == 1
-                ) {
-                    return true;
-                } else {
-                    this.$refs?.[formNameData]?.forEach((item) => {
-                        item.validate((valid) => {
-                            if (!valid) {
-                                isCheck = false;
-                            } else {
-                                console.log("error submit!!");
-                                return false;
-                            }
-                        });
+                this.$refs?.[formNameData]?.forEach((item) => {
+                    item.validate((valid) => {
+                        if (!valid) {
+                            isCheck = false;
+                        } else {
+                            console.log("error submit!!");
+                            return false;
+                        }
                     });
-                }
+                });
                 return isCheck;
             } else {
                 return true;

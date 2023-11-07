@@ -317,7 +317,7 @@ export default {
     return {
       dataTopic: {
         name: null,
-        content: "hello",
+        content: " ",
         isExam: false,
       },
 

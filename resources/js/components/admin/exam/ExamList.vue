@@ -474,6 +474,7 @@ export default {
       }
     },
     editLevel(id) {
+      window.scrollTo(0, 0);
       this.toggleBodyScroll(false);
       this.getDetailExam(id);
       this.state = "edit";

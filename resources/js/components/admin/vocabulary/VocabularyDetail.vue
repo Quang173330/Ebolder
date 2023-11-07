@@ -506,7 +506,7 @@ export default {
     return {
       dataTopic: {
         name: null,
-        content: "hello",
+        content: " ",
       },
       detailTopic: {
           id: null,

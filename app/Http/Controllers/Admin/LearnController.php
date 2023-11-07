@@ -144,7 +144,7 @@ class LearnController extends Controller
                 $file->move(public_path('upload/video'), $file_name);
                 $lesson = Learn::create([
                     'name' => $request->name,
-                    'content' => $request->contentReading || ' ',
+                    'content' => $request->contentReading,
                     'url_media' => $_SERVER['SERVER_NAME'] . ':8000/upload/video/' . $file_name,
                     'type_video' => 'upload',
                     'is_exam' => $request->is_exam
@@ -175,7 +175,7 @@ class LearnController extends Controller
             } else {
                 $lesson = Learn::create([
                     'name' => $request->name,
-                    'content' => $request->contentReading || ' ',
+                    'content' => $request->contentReading,
                     'url_media' => $request->linkMedia,
                     'type_video' => 'social',
                     'is_exam' => $request->is_exam
@@ -383,7 +383,7 @@ class LearnController extends Controller
                 $file->move(public_path('upload/video'), $file_name);
                 $lesson->update([
                     'name' => $request->name,
-                    'content' => $request->contentReading || ' ',
+                    'content' => $request->contentReading,
                     'url_media' => $_SERVER['SERVER_NAME'] . ':8000/upload/video/' . $file_name,
                     'type_video' => $request->type_video,
                     'is_exam' => $request->is_exam
@@ -393,7 +393,7 @@ class LearnController extends Controller
             } else {
                 $lesson->update([
                     'name' => $request->name,
-                    'content' => $request->contentReading || ' ',
+                    'content' => $request->contentReading,
                     'url_media' => $request->linkMedia,
                     'type_video' => $request->type_video,
                     'is_exam' => $request->is_exam

@@ -86,7 +86,7 @@ class GrammarController extends Controller
             DB::beginTransaction();
             $grammar = Grammar::create([
                 "name" => $request->name,
-                "description" => $request->description || ' ',
+                "description" => $request->description,
                 "is_exam" => $request->isExam
             ]);
             $dataQuestion = $request->dataQuestion;
@@ -316,7 +316,7 @@ class GrammarController extends Controller
             $grammar = Grammar::whereId($request->id)->first();
             $grammar->update([
                 'name' => $request->name,
-                'description' => $request->description || ' ',
+                'description' => $request->description,
                 'is_exam' => $request->is_exam,
             ]);
             $dataQuestion = ($request->dataQuestion);

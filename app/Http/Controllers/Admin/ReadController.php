@@ -31,7 +31,7 @@ class ReadController extends Controller
             DB::beginTransaction();
             $read = Reading::create([
                 "name" => $request->name,
-                "content" => $request->contentReading || ' ',
+                "content" => $request->contentReading,
                 "is_exam" => $request->isExam
             ]);
             foreach ($request->dataQuestion as $key => $value) {
@@ -329,7 +329,7 @@ class ReadController extends Controller
             $read = Reading::whereId($request->id)->first();
             $read->update([
                 "name" => $request->name,
-                "content" => $request->contentReading || ' ',
+                "content" => $request->contentReading,
                 "is_exam" => $request->isExam
             ]);
 

@@ -86,7 +86,7 @@ class VocabularyController extends Controller
             DB::beginTransaction();
             Vocabulary::create([
                 "name" => $request->name,
-                "description" => $request->description || ' ',
+                "description" => $request->description,
                 "is_exam" => $request->isExam,
             ]);
             DB::commit();
@@ -319,7 +319,7 @@ class VocabularyController extends Controller
             $vocabulary = Vocabulary::whereId($request->id)->first();
             $vocabulary->update([
                 'name' => $request->name,
-                'description' => $request->contentReading || ' ',
+                'description' => $request->contentReading,
                 'is_exam' => $request->is_exam,
             ]);
 

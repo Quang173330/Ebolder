@@ -17,7 +17,7 @@
       <transition name="fade">
         <div class="w-full h-full" v-if="show">
           <div
-            class="absolute inset-0 bg-blur flex items-center justify-center"
+            class="absolute inset-0 bg-blur pt-5 flex items-baseline justify-center"
           >
             <div class="w-[95%] md:w-[70%] bg-white shadow-sm px-4 py-4">
               <div class="py-2 relative">
@@ -30,7 +30,7 @@
                 </h1>
                 <span
                   class="absolute right-[5px] top-[5px] text-[20px] cursor-pointer"
-                  @click="show = !show"
+                  @click="closeModal()"
                 >
                   <i class="lnr-cross"></i>
                 </span>
@@ -106,36 +106,6 @@
                         </el-option>
                       </el-select>
                     </el-form-item>
-                    <!-- <el-form-item label="Vocabulary" prop="valueVocabulary">
-                        <el-select
-                          v-model="topicData.valueVocabulary"
-                          placeholder="Vocabulary"
-                          style="width: 100%"
-                        >
-                          <el-option
-                            v-for="item in listTopicVocabulary"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
-                          >
-                          </el-option>
-                        </el-select>
-                      </el-form-item> -->
-                    <!-- <el-form-item label="Grammar" prop="valueGrammar">
-                        <el-select
-                          v-model="topicData.valueGrammar"
-                          placeholder="Grammar"
-                          style="width: 100%"
-                        >
-                          <el-option
-                            v-for="item in listTopicGrammar"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
-                          >
-                          </el-option>
-                        </el-select>
-                      </el-form-item> -->
 
                     <el-form-item label="Writing" prop="valueLesson">
                       <el-select
@@ -155,21 +125,6 @@
                         </el-option>
                       </el-select>
                     </el-form-item>
-                    <!-- <el-form-item label="Pronunciation" prop="valueTalking">
-                        <el-select
-                          v-model="topicData.valueTalking"
-                          placeholder="Pronunciation"
-                          style="width: 100%"
-                        >
-                          <el-option
-                            v-for="item in listTopicTalking"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
-                          >
-                          </el-option>
-                        </el-select>
-                      </el-form-item> -->
                   </div>
                 </div>
                 <div class="flex justify-end items-center mt-4">
@@ -507,7 +462,19 @@ export default {
         this.isLoading = false;
       }
     },
+    closeModal() {
+      this.toggleBodyScroll(true);
+      this.show = !this.show
+    },
+    toggleBodyScroll(isEnabled) {
+      if (isEnabled) {
+        document.body.style.overflow = 'auto'; // Cho phép scroll
+      } else {
+        document.body.style.overflow = 'hidden'; // Không cho phép scroll
+      }
+    },
     editLevel(id) {
+      this.toggleBodyScroll(false);
       this.getDetailExam(id);
       this.state = "edit";
       this.idTemp = id;

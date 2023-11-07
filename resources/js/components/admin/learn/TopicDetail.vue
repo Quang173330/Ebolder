@@ -18,14 +18,14 @@
         <el-switch v-model="dataTopic.isExam"></el-switch>
       </div>
       <div class="mb-4">
-        <el-form ref="ruleFormItem" :model="dataTopic" class="w-full">
+        <el-form ref="ruleFormName" :model="dataTopic" class="w-full">
           <el-form-item
             label="Name"
             prop="name"
             :rules="[
               {
                 required: true,
-                message: 'Please enter your answer',
+                message: 'Please enter name topic',
               },
             ]"
             class="w-full m-0"
@@ -43,63 +43,6 @@
         api-key="hri1xykfk0d1gnrwf70v71zn81p6f7s5e3z1edxly9mansfq"
         :init="init()"
       />
-      <!-- <el-button type="primary" class="mt-4" @click="chooseType(1)">
-        Tải lên Video
-      </el-button>
-      <el-button type="primary" class="mt-4" @click="chooseType(2)">
-        Đường dẫn Media
-      </el-button>
-      <div
-        class="w-full p-4 rounded-sm border-dashed bg-white flex items-center justify-center cursor-pointer mt-4"
-        style="border-width: 2px"
-        @click="uploadAudio"
-        v-if="typeUpload == 1"
-      >
-        <div class="flex flex-col items-center">
-          <i class="el-icon-upload text-[50px]"></i>
-          <p class="mt-2 text-[15px] font-semibold">Click to upload</p>
-          <p class="mt-2 text-[15px] font-bold text-center" v-if="file != null">
-            Video Name: {{ file.name }}
-          </p>
-        </div>
-      </div>
-      <div class="mt-4" v-if="typeUpload == 2">
-        <el-input placeholder="Please enter link..." v-model="linkMedia">
-          <template slot="prepend">Http://</template>
-        </el-input>
-      </div>
-
-      <el-button
-        v-if="file != null && typeUpload == 1"
-        type="primary"
-        class="mt-4"
-        @click="logicPreviewVideo"
-      >
-        {{ isVideo ? "Hidden video" : "Preview video" }}
-      </el-button>
-      <input
-        type="file"
-        ref="fileAudio"
-        @change="getChangeAudio($event)"
-        hidden
-      />
-      <div class="mt-4 flex items-center justify-center">
-        <video controls style="width: 100%; height: auto" v-show="isVideo">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-      <div class="flex items-center justify-center" v-if="isDetailVideo">
-        <video
-          controls
-          style="width: 100%; height: auto"
-          id="video"
-          v-show="dataTopic.type_video == 'upload'"
-        ></video>
-        <video-embed
-          :src="linkMedia"
-          v-show="dataTopic.type_video == 'social'"
-        ></video-embed>
-      </div> -->
       <div class="flex flex-col justify-center w-full items-center">
         <div
           class="card w-full mt-3"
@@ -182,7 +125,7 @@
                         ]"
                         class="w-full m-0"
                       >
-                        <Input v-model="item.text">
+                        <Input v-model="item.text" :maxlength="255">
                           <template slot="prepend"
                             >{{ item.alphabet }}
                           </template>
@@ -362,7 +305,7 @@
                         ]"
                         class="w-full m-0"
                       >
-                        <Input v-model="item.text">
+                        <Input v-model="item.text" :maxlength="255">
                           <template slot="prepend"
                             >{{ indexAns + 1 }}
                           </template>
@@ -630,57 +573,6 @@ export default {
         this.dataTopic.type_video = "social";
       }
     },
-    async createTopic() {
-      try {
-        let formData = new FormData();
-
-        let dataTemp = {
-          name: this.dataTopic.name,
-          contentReading: this.dataTopic.content,
-          dataQuestion: this.dataQuestion,
-          linkMedia: this.linkMedia,
-        };
-        let result;
-        if (this.typeUpload == 1) {
-          formData.append("file", this.file);
-          formData.append("name", dataTemp.name);
-          formData.append("contentReading", dataTemp.contentReading);
-          formData.append(
-            "dataQuestion",
-            JSON.stringify(dataTemp.dataQuestion)
-          );
-          const headers = {
-            "Content-Type": "multipart/form-data",
-          };
-          result = await baseRequest.post(
-            `/admin/create-topic-lesson`,
-            formData,
-            { headers }
-          );
-        } else {
-          result = await baseRequest.post(
-            `/admin/create-topic-lesson`,
-            dataTemp
-          );
-        }
-        let { data } = result;
-        if (data.status == 200) {
-          this.$message({
-            message: data.message,
-            type: "success",
-          });
-          // setTimeout(() => {
-          //     window.location.href = `${$Api.baseUrl}/admin/lesson`;
-          // }, 1000);
-        } else {
-          this.$message({
-            message: data.message,
-            type: "error",
-          });
-        }
-      } catch (error) {}
-    },
-
     pushAns(id) {
       let dataQues = this.dataQuestion.find((item) => item.id == id);
       dataQues.dataAns.push({
@@ -689,11 +581,17 @@ export default {
         alphabet: this.alphabet[dataQues.dataAns.length].toUpperCase(),
       });
     },
-    validate(formNameItem, formNameData) {
-      if (this.$refs[formNameItem] && this.$refs[formNameData]) {
+    validate(formNameItem, formNameData, ruleFormName) {
+      if (this.$refs[formNameItem] || this.$refs[formNameData] || this.$refs[ruleFormName]) {
         let isCheck = true;
-
-        this.$refs[formNameItem].forEach((item) => {
+        if (ruleFormName) {
+            this.$refs.ruleFormName.validate((valid) => {
+                if (!valid) {
+                    isCheck = false
+                }
+            });
+        }
+        this.$refs?.[formNameItem]?.forEach((item) => {
           item.validate((valid) => {
             if (!valid) {
               isCheck = false;
@@ -703,20 +601,16 @@ export default {
             }
           });
         });
-        if (this.dataQuestion[0].type == 2 && this.dataQuestion.length == 1) {
-          return true;
-        } else {
-          this.$refs[formNameData].forEach((item) => {
-            item.validate((valid) => {
-              if (!valid) {
-                isCheck = false;
-              } else {
-                console.log("error submit!!");
-                return false;
-              }
-            });
+        this.$refs?.[formNameData]?.forEach((item) => {
+          item.validate((valid) => {
+            if (!valid) {
+              isCheck = false;
+            } else {
+              console.log("error submit!!");
+              return false;
+            }
           });
-        }
+        });
         return isCheck;
       } else {
         return true;
@@ -827,37 +721,6 @@ export default {
       });
       return index;
     },
-    async createQuestion(id) {
-      let dataTemp = this.dataQuestion.map((item) => ({
-        id: item.id,
-        audio_id: id,
-        question: item.question,
-        level: item.level,
-        dataAns: item.dataAns,
-        answer: item.answer,
-      }));
-      try {
-        let result = await baseRequest.post(
-          `/admin/add-question-to-audio-listening`,
-          dataTemp
-        );
-        let { data } = result;
-        if (data.status == 200) {
-          this.$message({
-            message: data.message,
-            type: "success",
-          });
-          setTimeout(() => {
-            window.location.href = `${$Api.baseUrl}/admin/listening-level-test/question-list`;
-          }, 1000);
-        } else {
-          this.$message({
-            message: data.message,
-            type: "error",
-          });
-        }
-      } catch (error) {}
-    },
     async getDetailTopic() {
       try {
         let rs = await baseRequest.get(
@@ -965,58 +828,61 @@ export default {
       return text;
     },
     async saveChangeTopic() {
-      try {
-        let formData = new FormData();
+      let isCheck = this.validate("ruleFormData", "ruleFormItem", "ruleFormName");
+      if (isCheck) {
+        try {
+          let formData = new FormData();
 
-        let dataTemp = {
-          name: this.dataTopic.name,
-          contentReading: this.dataTopic.content,
-          dataQuestion: this.dataQuestion,
-          linkMedia: this.linkMedia,
-          id: this.param,
-          type_video: this.dataTopic.type_video,
-          is_exam: this.dataTopic.isExam ? 1 : 0
-        };
-        let result;
-        if (this.typeUpload == 1) {
-          formData.append("file", this.file);
-          formData.append("name", dataTemp.name);
-          formData.append("contentReading", dataTemp.contentReading);
-          formData.append("type_video", dataTemp.type_video);
-          formData.append(
-            "dataQuestion",
-            JSON.stringify(dataTemp.dataQuestion)
-          );
-          formData.append("id", this.param);
-
-          const headers = {
-            "Content-Type": "multipart/form-data",
+          let dataTemp = {
+            name: this.dataTopic.name,
+            contentReading: this.dataTopic.content,
+            dataQuestion: this.dataQuestion,
+            linkMedia: this.linkMedia,
+            id: this.param,
+            type_video: this.dataTopic.type_video,
+            is_exam: this.dataTopic.isExam ? 1 : 0
           };
-          result = await baseRequest.post(
-            `/admin/update-question-lesson`,
-            formData,
-            { headers }
-          );
-        } else {
-          result = await baseRequest.post(
-            `/admin/update-question-lesson`,
-            dataTemp
-          );
+          let result;
+          if (this.typeUpload == 1) {
+            formData.append("file", this.file);
+            formData.append("name", dataTemp.name);
+            formData.append("contentReading", dataTemp.contentReading);
+            formData.append("type_video", dataTemp.type_video);
+            formData.append(
+              "dataQuestion",
+              JSON.stringify(dataTemp.dataQuestion)
+            );
+            formData.append("id", this.param);
+
+            const headers = {
+              "Content-Type": "multipart/form-data",
+            };
+            result = await baseRequest.post(
+              `/admin/update-question-lesson`,
+              formData,
+              { headers }
+            );
+          } else {
+            result = await baseRequest.post(
+              `/admin/update-question-lesson`,
+              dataTemp
+            );
+          }
+          let { data } = result;
+          if (data.status == 200) {
+            this.$message({
+              message: data.message,
+              type: "success",
+            });
+          } else {
+            this.$message({
+              message: data.message,
+              type: "error",
+            });
+          }
+        } catch (error) {
+          console.log("🚀 ~ ~ error", error);
         }
-        let { data } = result;
-        if (data.status == 200) {
-          this.$message({
-            message: data.message,
-            type: "success",
-          });
-        } else {
-          this.$message({
-            message: data.message,
-            type: "error",
-          });
-        }
-      } catch (error) {
-        console.log("🚀 ~ ~ error", error);
       }
     },
   },

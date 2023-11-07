@@ -29,14 +29,14 @@
         <el-switch v-model="dataTopic.isExam"></el-switch>
       </div>
       <div class="mb-4">
-        <el-form ref="ruleFormItem" :model="dataTopic" class="w-full">
+        <el-form ref="ruleFormName" :model="dataTopic" class="w-full">
           <el-form-item
             label="Name"
             prop="name"
             :rules="[
               {
                 required: true,
-                message: 'Please enter your answer',
+                message: 'Please enter name topic',
               },
             ]"
             class="w-full m-0"
@@ -158,7 +158,7 @@
                         ]"
                         class="w-full m-0"
                       >
-                        <Input v-model="item.text">
+                        <Input v-model="item.text" :maxlength="255">
                           <template slot="prepend"
                             >{{ item.alphabet }}
                           </template>
@@ -289,7 +289,7 @@
                         ]"
                         class="w-full m-0"
                       >
-                        <Input v-model="item.text">
+                        <Input v-model="item.text" :maxlength="255">
                           <template slot="prepend"
                             >{{ item.alphabet }}
                           </template>
@@ -517,7 +517,7 @@ export default {
       }
     },
     async createTopic() {
-      let isCheck = this.validate("ruleFormData", "ruleFormItem");
+      let isCheck = this.validate("ruleFormData", "ruleFormItem", "ruleFormName");
       if (isCheck) {
         try {
           this.isLoading = true;
@@ -583,11 +583,17 @@ export default {
         alphabet: this.alphabet[dataQues.dataAns.length].toUpperCase(),
       });
     },
-    validate(formNameItem, formNameData) {
-      if (this.$refs[formNameItem] && this.$refs[formNameData]) {
+    validate(formNameItem, formNameData, ruleFormName) {
+      if (this.$refs[formNameItem] || this.$refs[formNameData] || this.$refs[ruleFormName]) {
         let isCheck = true;
-
-        this.$refs[formNameItem].forEach((item) => {
+        if (ruleFormName) {
+          this.$refs.ruleFormName.validate((valid) => {
+              if (!valid) {
+                  isCheck = false
+              }
+          });
+        }
+        this.$refs?.[formNameItem]?.forEach((item) => {
           item.validate((valid) => {
             if (!valid) {
               isCheck = false;
@@ -597,20 +603,16 @@ export default {
             }
           });
         });
-        if (this.dataQuestion[0].type == 2 && this.dataQuestion.length == 1) {
-          return true;
-        } else {
-          this.$refs[formNameData].forEach((item) => {
-            item.validate((valid) => {
-              if (!valid) {
-                isCheck = false;
-              } else {
-                console.log("error submit!!");
-                return false;
-              }
-            });
+        this.$refs?.[formNameData]?.forEach((item) => {
+          item.validate((valid) => {
+            if (!valid) {
+              isCheck = false;
+            } else {
+              console.log("error submit!!");
+              return false;
+            }
           });
-        }
+        });
         return isCheck;
       } else {
         return true;

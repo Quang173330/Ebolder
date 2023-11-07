@@ -26,14 +26,14 @@
         <el-switch v-model="dataTopic.isExam"></el-switch>
       </div>
       <div class="mb-4">
-        <el-form ref="ruleFormItem" :model="dataTopic" class="w-full">
+        <el-form ref="ruleFormName" :model="dataTopic" class="w-full">
           <el-form-item
             label="Name"
             prop="name"
             :rules="[
               {
                 required: true,
-                message: 'Please enter your answer',
+                message: 'Please enter name topic',
               },
             ]"
             class="w-full m-0"
@@ -110,7 +110,7 @@
                         ]"
                         class="w-full m-0"
                       >
-                        <Input v-model="item.text">
+                        <Input v-model="item.text" :maxlength="255">
                           <template slot="prepend"
                             >{{ item.alphabet }}
                           </template>
@@ -241,7 +241,7 @@
                         ]"
                         class="w-full m-0"
                       >
-                        <Input v-model="item.text">
+                        <Input v-model="item.text" :maxlength="255">
                           <template slot="prepend"
                             >{{ item.alphabet }}
                           </template>
@@ -382,37 +382,40 @@ export default {
       };
     },
     async createTopic() {
-      this.isLoading = true;
-      try {
-        let dataTemp = {
-          name: this.dataTopic.name,
-          description: this.dataTopic.content,
-          isExam: this.dataTopic.isExam,
-          dataQuestion: this.dataQuestion,
-        };
-        let result = await baseRequest.post(
-          `/admin/store-question-speak`,
-          dataTemp
-        );
-        let { data } = result;
-        if (data.status == 200) {
-          this.$message({
-            message: data.message,
-            type: "success",
-          });
-          setTimeout(() => {
-            window.location.href = `${$Api.baseUrl}/admin/speaking-level-test`;
-          }, 1000);
-        } else {
-          this.$message({
-            message: data.message,
-            type: "error",
-          });
+      let isCheck = this.validate("ruleFormData", "ruleFormItem", "ruleFormName");
+      if (isCheck) {
+        this.isLoading = true;
+        try {
+          let dataTemp = {
+            name: this.dataTopic.name,
+            description: this.dataTopic.content,
+            isExam: this.dataTopic.isExam,
+            dataQuestion: this.dataQuestion,
+          };
+          let result = await baseRequest.post(
+            `/admin/store-question-speak`,
+            dataTemp
+          );
+          let { data } = result;
+          if (data.status == 200) {
+            this.$message({
+              message: data.message,
+              type: "success",
+            });
+            setTimeout(() => {
+              window.location.href = `${$Api.baseUrl}/admin/speaking-level-test`;
+            }, 1000);
+          } else {
+            this.$message({
+              message: data.message,
+              type: "error",
+            });
+          }
+        } catch (error) {
+          console.log("🚀 ~ ~ error", error);
+        } finally {
+          this.isLoading = false;
         }
-      } catch (error) {
-        console.log("🚀 ~ ~ error", error);
-      } finally {
-        this.isLoading = false;
       }
     },
 
@@ -424,11 +427,17 @@ export default {
         alphabet: this.alphabet[dataQues.dataAns.length].toUpperCase(),
       });
     },
-    validate(formNameItem, formNameData) {
-      if (this.$refs[formNameItem] && this.$refs[formNameData]) {
+    validate(formNameItem, formNameData, ruleFormName) {
+      if (this.$refs[formNameItem] || this.$refs[formNameData] || this.$refs[ruleFormName]) {
         let isCheck = true;
-
-        this.$refs[formNameItem].forEach((item) => {
+        if (ruleFormName) {
+            this.$refs.ruleFormName.validate((valid) => {
+                if (!valid) {
+                    isCheck = false
+                }
+            });
+        }
+        this.$refs?.[formNameItem]?.forEach((item) => {
           item.validate((valid) => {
             if (!valid) {
               isCheck = false;
@@ -438,20 +447,16 @@ export default {
             }
           });
         });
-        if (this.dataQuestion[0].type == 2 && this.dataQuestion.length == 1) {
-          return true;
-        } else {
-          this.$refs[formNameData].forEach((item) => {
-            item.validate((valid) => {
-              if (!valid) {
-                isCheck = false;
-              } else {
-                console.log("error submit!!");
-                return false;
-              }
-            });
+        this.$refs?.[formNameData]?.forEach((item) => {
+          item.validate((valid) => {
+            if (!valid) {
+              isCheck = false;
+            } else {
+              console.log("error submit!!");
+              return false;
+            }
           });
-        }
+        });
         return isCheck;
       } else {
         return true;

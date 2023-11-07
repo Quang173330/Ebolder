@@ -340,7 +340,7 @@ class SpeakController extends Controller
             return [
                 "status" => 400,
                 "errorCode" => 400,
-                "message" => "Thêm câu hỏi thất bại !"
+                "message" => "Failed !"
             ];
         }
 
@@ -490,7 +490,7 @@ class SpeakController extends Controller
         return [
             "status" => 200,
             "errorCode" => 0,
-            "message" => "Thêm câu hỏi thành công !"
+            "message" => "Successful!"
         ];
     }
     public function allQuestionLuyenAm(Request $request){
@@ -504,7 +504,7 @@ class SpeakController extends Controller
             "status" => 200,
             "errorCode" => 0,
             "data"=>  $questions,
-            "message" => "Thêm câu hỏi thành công !"
+            "message" => "Successful!"
         ];
     }
     public function updateQuestionLuyenAm(Request $request, $id){

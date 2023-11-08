@@ -401,7 +401,7 @@ class ListenController extends Controller
         try {
             Listening::create([
                 "name" => $request->name,
-                "description" => $request->description,
+                "description" => $request->description ?? " ",
                 "is_exam" => $request->isExam,
             ]);
             return response()->json([

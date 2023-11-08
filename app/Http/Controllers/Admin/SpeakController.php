@@ -88,7 +88,7 @@ class SpeakController extends Controller
                 $file->move(public_path('upload/speaking'), $file_name);
                 Speak::create([
                     "name" => $request->name,
-                    "description" => $request->description,
+                    "description" => $request->description ?? " ",
                     'audio_url' => $_SERVER['SERVER_NAME'] . '/upload/speaking/' . $file_name,
                     'path_url' => 'upload/speaking/' . $file_name,
                     "is_exam" => $request->isExam
@@ -97,7 +97,7 @@ class SpeakController extends Controller
             }else {
                 Speak::create([
                     "name" => $request->name,
-                    "description" => $request->description,
+                    "description" => $request->description ?? " ",
                     "is_exam" => $request->isExam
                 ]);
             }
@@ -126,7 +126,7 @@ class SpeakController extends Controller
                 $file->move(public_path('upload/speaking'), $file_name);
                 Speak::whereId($id)->update([
                     "name" => $request->name,
-                    "description" => $request->description,
+                    "description" => $request->description ?? " ",
                     'audio_url' => $_SERVER['SERVER_NAME'] . '/upload/speaking/' . $file_name,
                     'path_url' => 'upload/speaking/' . $file_name
                 ]);
@@ -134,7 +134,7 @@ class SpeakController extends Controller
             }else {
                 Speak::whereId($id)->update([
                     "name" => $request->name,
-                    "description" => $request->description,
+                    "description" => $request->description ?? " ",
                     "is_exam" => $request->isExam
                 ]);
             }
@@ -237,7 +237,7 @@ class SpeakController extends Controller
             $speak->update(
                 [
                     "name" => $request->name,
-                    "description" => $request->description
+                    "description" => $request->description ?? " "
                 ]
             );
             return response()->json([
@@ -362,7 +362,7 @@ class SpeakController extends Controller
             $speak = Speak::whereId($request->id)->first();
             $speak->update([
                 'name' => $request->name,
-                'description' => $request->description ,
+                'description' => $request->description ?? " " ,
                 'is_exam' => $request->is_exam,
             ]);
             $dataQuestion = ($request->dataQuestion);

@@ -34,8 +34,7 @@
                         </div>
                         <el-dropdown trigger="click" @command="handleCommand" v-if="user">
                             <div class="flex items-center justify-center cursor-pointer">
-                                <Avatar />
-                                <!-- <el-avatar shape="square"> {{ user ? user.name[0] : "" }} </el-avatar> -->
+                                <span class="mr-2">{{ user ? user.name : "" }}</span><Avatar />
                             </div>
                             <template #dropdown>
                                 <el-dropdown-menu>

@@ -166,7 +166,7 @@ export default {
       }
     },
     async getLessonDetail(lessonId, lessonName) {
-      
+      if(this.selectedLessonId === lessonId) return
       this.selectedLessonId = lessonId;
       this.selectedLessonName = lessonName;
       const loading = this.$loading({

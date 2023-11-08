@@ -80,7 +80,7 @@
                     Next
                     <img :src="arrowRight" />
                 </div>
-                <div v-show="selectedTopicIndex == this.topics?.length - 1" class="button-next" @click="submit">
+                <div class="button-next" @click="submit">
                     Finish
                     <img :src="arrowRight" />
                 </div>

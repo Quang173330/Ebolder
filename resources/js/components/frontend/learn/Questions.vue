@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="w-full flex flex-row mt-4">
-                <div v-show="Object.keys(this.questionDone).length == this.questions?.length" :class="[`button bg-${lessonType}-tag`]" @click="submit">
+                <div :class="[`button bg-${lessonType}-tag`]" @click="submit">
                     Finish
                 </div>
             </div>

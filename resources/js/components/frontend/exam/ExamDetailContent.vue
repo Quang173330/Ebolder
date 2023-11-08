@@ -11,17 +11,31 @@
         </div>
 
         <div class="border-t border-gray-300 w-full h-px"></div>
-        <div v-html="this.data?.description" class="text-[16px] p-3 max-w-[380px] sm:max-w-[764px] md:max-w-[900px]"></div>
+        <editor :init="init()" toolbar="" :disabled="true" :value="content?.description || content?.content" />
     </div>
 </template>
 
 <script>
+import Editor from "@tinymce/tinymce-vue";
 export default {
+    components: {
+        Editor
+    },
     data() {
         return {
             highlighter: require('../../../../../public/images/learn/highlighter.svg'),
             data: null
         }
+    },
+    methods: {
+        init() {
+            return {
+                plugins: "pagebreak autoresize",
+                menubar: "",
+                toolbar: "",
+                resize: false
+            };
+        },
     },
     props: ["content"],
     watch: {

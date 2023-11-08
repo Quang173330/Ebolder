@@ -80,6 +80,7 @@
                     Next
                     <img :src="arrowRight" />
                 </div>
+                <div class="w-3"></div>
                 <div class="button-next" @click="submit">
                     Finish
                     <img :src="arrowRight" />
@@ -295,11 +296,14 @@ export default {
         topics(newTopics) {
             // reset data
             this.selectedAnswers = {};
-            this.questionDone = [];
             this.selectedIndex = 0;
             this.selectedTopicIndex = 0;
             this.questions = {}
             this.questionCount = 0;
+            this.questionDone = {};
+            this.inputAnswerValues = {};
+            this.results = {};
+
             if (newTopics && newTopics.length) {
                 this.selectedTopic = newTopics[this.selectedTopicIndex];
                 this.getAudioDetail(this.selectedTopic?.id);

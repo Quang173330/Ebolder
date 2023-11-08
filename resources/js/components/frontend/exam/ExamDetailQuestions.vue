@@ -81,7 +81,7 @@ export default {
             inputAnswersByQuestion: {},
             inputAnswers: {},
             answerEachInputQuestion: {},
-            result: {},
+            results: {},
             arrowLeft: require('../../../../../public/images/learn/arrow-left.svg'),
             arrowRight: require('../../../../../public/images/learn/arrow-right.svg')
         }

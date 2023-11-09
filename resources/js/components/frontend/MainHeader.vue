@@ -2,11 +2,11 @@
     <div>
         <div class="flex items-center py-2 md:py-[24px] px-4 justify-between relative z-10 border-b-2 header"
             style="font-family: lexend !important;">
-            <div class="flex items-center cursor-pointer" @click="backToHome">
-                <img src="/images/landing/logo.svg" alt="" />
-                <img :src="home" @click="backToHome" class="home" />
+            <div class="flex items-center cursor-pointer">
+                <img src="/images/landing/logo.svg" alt="" @click="backToHome"/>
+                <img :src="home" @click="backToHome" class="home"/>
                 <div class="flex items-center justify-center px-4 py-2 rounded-[100px] bg-[#E6E8EC] breadscrumb">
-                    <div v-if="breadcrumb && breadcrumb.length" v-for="(item, index) in breadcrumb" :key="item.label"
+                    <div v-if="breadcrumb && breadcrumb.length" v-for="(item, index) in breadcrumb" :key="item.label" @click="backToExam(breadcrumb)"
                         class="flex items-center justify-center">
                         <img class="mr-3" :src="item.icon" />
                         {{ item?.label }}
@@ -129,6 +129,17 @@ export default {
         },
         backToHome() {
             window.location.href = "/";
+        },
+        backToExam(breadcrumb) {
+            if (breadcrumb.length > 0) {
+                if (breadcrumb[0].label == 'Exam') {
+                    window.location.href = "/exam";
+                } else {
+                    window.location.href = "/";
+                }
+            } else {
+                window.location.href = "/";
+            }
         },
         handleCountdownProgress(data) {
             this.timerun = this.timeWork - data.totalMilliseconds + 1000;

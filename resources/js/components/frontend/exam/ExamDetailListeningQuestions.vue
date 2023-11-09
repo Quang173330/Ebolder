@@ -220,6 +220,11 @@ export default {
             return array.sort(() => Math.random() - 0.5); 
         },
         async getAudioDetail(audioId) {
+            if (this.listQuestion.hasOwnProperty(audioId)) {
+                this.questions = this.listQuestion[audioId];
+                this.$emit('update-content', audioId);
+                return
+            }
             const loading = this.$loading({
                 lock: true,
                 text: "Loading",
@@ -231,15 +236,11 @@ export default {
                 if (rs.data.status == 200) {
                     const data = rs.data.data;
                     if (data) {
-                        if (this.listQuestion.hasOwnProperty(audioId)) {
-                            this.questions = this.listQuestion[audioId];
-                        } else {
-                            data?.question_listening && data?.question_listening.forEach(question => {
-                                question.answer_listening = question.type == 1 ? this.shuffle(question.answer_listening) : question.answer_listening;
-                            })
-                            this.listQuestion[audioId] = data?.question_listening;
-                            this.questions = data?.question_listening;
-                        }
+                        data?.question_listening && data?.question_listening.forEach(question => {
+                            question.answer_listening = question.type == 1 ? this.shuffle(question.answer_listening) : question.answer_listening;
+                        })
+                        this.listQuestion[audioId] = data?.question_listening;
+                        this.questions = data?.question_listening;
                         this.$emit('update-content', audioId);
                     }
                 }

@@ -391,9 +391,11 @@ export default {
         this.begin = Date.now();
         await this.getExamDetail();
         await this.getListeningExam();
-        this.getReadingExam();
-        this.getSpeakingExam();
-        this.getWritingExam();
+        Promise.all([
+            this.getReadingExam(),
+            this.getSpeakingExam(),
+            this.getWritingExam(),
+        ])
         this.handleSelectedSkill('listening')
         loading.close()
     },

@@ -11,7 +11,9 @@
         </div>
 
         <div class="border-t border-gray-300 w-full h-px"></div>
-        <editor :init="init()" toolbar="" :disabled="true" :value="content?.description || content?.content" />
+        <editor
+        api-key="9cf2lnudes654k3o56ypikgh86gxhcwsovfrdowhu7awzfwg"
+         :init="init()" toolbar="" :disabled="true" :value="content?.description || content?.content" />
     </div>
 </template>
 

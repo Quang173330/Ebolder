@@ -31,7 +31,7 @@
               <div class="">
                 <editor
                   v-model="form.content"
-                  api-key="hri1xykfk0d1gnrwf70v71zn81p6f7s5e3z1edxly9mansfq"
+                  api-key="9cf2lnudes654k3o56ypikgh86gxhcwsovfrdowhu7awzfwg"
                   :init="{
                     height: 400,
                     menubar: false,

@@ -31,7 +31,7 @@
                   <el-form-item label="Description" prop="description">
                     <editor
                       v-model="topicData.description"
-                      api-key="hri1xykfk0d1gnrwf70v71zn81p6f7s5e3z1edxly9mansfq"
+                      api-key="9cf2lnudes654k3o56ypikgh86gxhcwsovfrdowhu7awzfwg"
                       :init="init()"
                     />
                   </el-form-item>
@@ -186,7 +186,7 @@ export default {
                bullist numlist outdent indent | removeformat",
         paste_data_images: true,
         tinydrive_token_provider:
-          "df155c9e0a586dc631aa78a2434aa960bb71a67b960e892f50bec0345f1444fc",
+          "9cf2lnudes654k3o56ypikgh86gxhcwsovfrdowhu7awzfwg",
         file_picker_callback: function (callback, value, meta) {
           let x =
             window.innerWidth ||

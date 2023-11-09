@@ -49,7 +49,7 @@
         <div class="py-4 border-t border-[#e6e8ec]">
             <p class="text-lg font-semibold mb-2">Question {{ selectedIndex + 1 }}</p>
             <p class="font-semibold"  id="question">
-                <span v-for="(item, index) in handleQuestionWithInput(selectedQuestion?.question)" :key="'div' + selectedQuestion?.id  + index">
+                <span v-for="(item, index) in handleQuestionWithInput(selectedQuestion)" :key="'div' + selectedQuestion?.id  + index">
                     <span v-if="item !== '#'" :key="'span' + index">{{ item }}</span>
                     <input v-else type="text"
                             @input="(event) => handleAnswerInput(event, selectedQuestion, index)"
@@ -207,8 +207,10 @@ export default {
             return -1;
         },
         handleQuestionWithInput(question) {
-            if (!question?.includes("#")) return [question];
-            const executed = question.split(/(#)/)
+            const type = question?.type;
+            const text = question?.question;
+            if (!text?.includes("#") || type == 1) return [text];
+            const executed = text.split(/(#)/)
             return executed;
         },
         isQuestionAnswered(answerId, questionId) {

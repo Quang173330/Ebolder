@@ -67,6 +67,7 @@
 
 <script>
 import Right from '../../../svg/Right.vue';
+import Left from '../../../svg/Left.vue';
 export default {
     components: {
         Right,

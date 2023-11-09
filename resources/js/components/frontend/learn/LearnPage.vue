@@ -43,7 +43,7 @@
             <span>{{ selectedLessonName || ''  }}</span>
           </div>
           <div class="text-5xl text-center w-100  mt-5 font-bold">
-            {{ (Date.now() - this.begin) / 1000  || 0 }}s
+            {{ formatResultTime(Date.now() - this.begin)  || 0 }}
           </div>
           <div class="text-xl text-center w-100 mt-2">
             {{ new Date().toLocaleDateString()  }}
@@ -132,6 +132,9 @@ export default {
     }
     },
   methods: {
+    formatResultTime(mili) {
+      return $Helper.millisToMinutesAndSeconds(mili);
+    },
     toggle() {
       this.open = !this.open;
     },

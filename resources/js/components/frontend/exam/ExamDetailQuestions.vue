@@ -51,14 +51,14 @@
         <div class="w-full flex flex-row mt-4">
             <div :class="{'button-next': selectedIndex <= this.questions?.length - 1 && selectedIndex > 0, 'button-back': selectedIndex == 0 }"
                 @click="handleSelectQuestion(selectedIndex - 1, 'back')">
-                <img :src="arrowLeft" />
+                <Left :color="selectedIndex <= this.questions?.length - 1 && selectedIndex > 0 ? activeColor : inactiveColor"/>
                 Back
             </div>
             <div class="w-3"></div>
             <div :class="{'button-next': selectedIndex < this.questions?.length - 1, 'button-back': selectedIndex == this.questions?.length - 1}"
                 @click="handleSelectQuestion(selectedIndex + 1, 'next')">
                 Next
-                <img :src="arrowRight" />
+                <Right :color="selectedIndex < this.questions?.length - 1 ? activeColor : inactiveColor" />
             </div>
         </div>
     </div>
@@ -66,11 +66,17 @@
 </template>
 
 <script>
-
+import Right from '../../../svg/Right.vue';
 export default {
+    components: {
+        Right,
+        Left
+    },
     props: ["questions", "skill", "onSubmit", "value"],
     data() {
         return {
+            activeColor: '#2162ff',
+            inactiveColor: '#141416',
             selectedIndex: 0,
             selectedQuestion: this.questions?.[0],
             selectedAnswerId: 0,

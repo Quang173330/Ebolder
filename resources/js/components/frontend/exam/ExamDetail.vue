@@ -390,10 +390,10 @@ export default {
         });
         this.begin = Date.now();
         await this.getExamDetail();
-        await this.getReadingExam();
         await this.getListeningExam();
-        await this.getSpeakingExam();
-        await this.getWritingExam();
+        this.getReadingExam();
+        this.getSpeakingExam();
+        this.getWritingExam();
         this.handleSelectedSkill('listening')
         loading.close()
     },

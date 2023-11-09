@@ -190,6 +190,11 @@ export default {
                     this.questionCount += 1
                 })
             }
+        },
+        "skill" : {
+            handler(value) {
+                this.results = {};
+            }
         }
     }
 }

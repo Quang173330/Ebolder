@@ -31,7 +31,6 @@
           api-key="9cf2lnudes654k3o56ypikgh86gxhcwsovfrdowhu7awzfwg"
           :init="{
             height: 600,
-            menubar: false,
             plugins: [
               'advlist autolink lists link image charmap print preview anchor',
               'searchreplace visualblocks code fullscreen',

@@ -1,9 +1,26 @@
 <template>
   <div class="container">
     <LoadingVue v-if="isLoading" />
+    
     <el-button @click="downloadExcel" type="primary" plain class="mb-1"
-      >Download Excel
-    </el-button>
+        >Download Excel
+      </el-button>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3 mb-3">
+      <el-select
+        class="listening"
+        v-model="selectFilter"
+        placeholder="Listening"
+        style="width: 100%"
+      >
+        <el-option
+          v-for="item in filters"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        >
+        </el-option>
+      </el-select>
+    </div>
     <el-table
       :data="tableData"
       style="max-width: 97%"
@@ -85,7 +102,22 @@ export default {
       isAdmin: true,
       total : 0,
       page: 1,
-      timeOut: null
+      timeOut: null,
+      filters: [
+        {
+          id: 1,
+          name: 'All'
+        },
+        {
+          id: 2,
+          name: 'Study'
+        },
+        {
+          id: 3,
+          name: 'Not study'
+        },
+      ],
+      selectFilter: 1
     };
   },
   methods: {
@@ -93,12 +125,10 @@ export default {
       window.location.href = `${$Api.baseUrl}/admin/user/edit/` + row.id;
     },
     handleHistory(index, row) {
-      window.location.href =
-        `${$Api.baseUrl}/admin/user/exam-history/` + row.id;
+      window.open(`${$Api.baseUrl}/admin/user/exam-history/` + row.id );
     },
     handleHistoryLearn(index, row) {
-      window.location.href =
-        `${$Api.baseUrl}/admin/user/learn-history/` + row.id;
+      window.open(`${$Api.baseUrl}/admin/user/learn-history/` + row.id);
     },
     handleDelete(index, row) {
       this.$confirm(
@@ -140,7 +170,7 @@ export default {
     async getAllUser() {
       try {
         this.isLoading = true;
-        const { data } = await baseRequest.get(`/admin/list-user?page_number=${this.page}&search=${this.search || ''}`);
+        const { data } = await baseRequest.get(`/admin/list-user?page_number=${this.page}&type=${this.selectFilter}&search=${this.search || ''}`);
         if (data.status == 200) {
           this.isLoading = false;
           const users = data?.data?.data || [];
@@ -172,6 +202,14 @@ export default {
       handler(value) {
         this.page = 1;
         this.total = 0;
+        clearTimeout(this.timeOut)
+        this.timeOut = setTimeout(async() => {
+            await this.getAllUser()
+        }, 300);
+      }
+    },
+    "selectFilter": {
+      handler(value) {
         clearTimeout(this.timeOut)
         this.timeOut = setTimeout(async() => {
             await this.getAllUser()

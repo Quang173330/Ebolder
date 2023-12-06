@@ -26,10 +26,10 @@ class LevelController extends Controller
                 "name" => $request->name,
             ]);
             $level->Learn()->attach($request->lessons);
-            $level->Reading()->attach($request->reading_id);
-            $level->Vocabulary()->attach($request->vocabulary_id);
-            $level->Listen()->attach($request->listening_id);
-            $level->Grammar()->attach($request->grammar_id);
+            $level->Reading()->attach($request->readings);
+            $level->Vocabulary()->attach($request->vocabularies);
+            $level->Listen()->attach($request->listenings);
+            $level->Grammar()->attach($request->grammars);
             $level->Speak()->attach($request->speakings);
             $level->Pronunciation()->attach($request->talkings);
             DB::commit();

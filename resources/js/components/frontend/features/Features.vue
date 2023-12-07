@@ -69,7 +69,7 @@
             > 
               <a :href="item.link" target="_blank" class="flex items-center justify-between">
                 <div class="flex">
-                  <img src width="84" height="84" :src="gameImg" alt="">
+                  <img src width="84" height="84" :src="writingImg" alt="">
                   <div class="ml-2 justify-evenly flex flex-col">
                     <div class="writing-tag">Writing assessment</div>
                     <div class="text-[16px]">{{ item.name }}</div>
@@ -104,6 +104,7 @@ export default {
       ],
       dicsImg: require('../../../../../public/images/landing/dics.svg'),
       gameImg: require('../../../../../public/images/landing/game-icon.svg'),
+      writingImg: require('../../../../../public/images/landing/writing.svg'),
       dics: [
         {
           name: "Oxford Learner's Dictionaries",
@@ -253,6 +254,18 @@ export default {
           name: "Write-and-improve",
           link: 'https://www.cambridgeenglish.org/vn/learning-english/write-and-improve/'
         },
+        {
+          name: "Text Inspector",
+          link: 'https://textinspector.com/ '
+        },
+        {
+          name: "Quillbot",
+          link: 'https://quillbot.com/'
+        },
+        {
+          name: "Paraphrasing Tool",
+          link: 'https://paraphrasing-tool.com/'
+        },
       ]
     };
   },
@@ -287,8 +300,8 @@ export default {
   padding: 3px 5px;
 }
 .writing-tag {
-  background-color: #cad8f8;
-  color: #ffff;
+  background-color: #e5cedf;
+  color: #AA3181;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;

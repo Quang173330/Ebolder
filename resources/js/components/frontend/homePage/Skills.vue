@@ -36,7 +36,7 @@
                         v-bind:class="{ 'border-0': openTab !== 4, 'border-b-4 border-[#2162FF]': openTab === 4 }">
                         <a class="text-xs font-bold uppercase sm:px-3 sm:py-3 leading-normal flex items-center"
                             v-on:click="navigatoToFeature()">
-                            <GameSVG :color="openTab === 4 ? activeColor : inactiveIconColor" /> Writing assessment
+                            <PencilSvg :color="inactiveIconColor"/> Writing assessment
                         </a>
                     </li>
                 </ul>
@@ -86,6 +86,7 @@ import ListeningSVG from '../../../svg/ListeningSVG.vue';
 import SpeakingSVG from '../../../svg/SpeakingSVG.vue';
 import ReadingSVG from '../../../svg/ReadingSVG.vue';
 import WritingSVG from '../../../svg/WritingSVG.vue';
+import PencilSvg from '../../../svg/Pencil.vue'
 
 export default {
     props: ["levels"],
@@ -99,7 +100,8 @@ export default {
         ListeningSVG,
         SpeakingSVG,
         ReadingSVG,
-        WritingSVG
+        WritingSVG,
+        PencilSvg
     },
     watch: {
         "levels": {

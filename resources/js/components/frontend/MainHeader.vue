@@ -3,7 +3,7 @@
         <div class="flex items-center py-2 md:py-[24px] px-4 justify-between relative z-10 border-b-2 header"
             style="font-family: lexend !important;">
             <div class="flex items-center cursor-pointer">
-                <img src="/images/landing/logo.svg" alt="" @click="backToHome"/>
+                <img width="46px" height="46px" src="/images/landing/logo.svg" alt="" @click="backToHome"/>
                 <img :src="home" @click="backToHome" class="home"/>
                 <div class="flex items-center justify-center px-4 py-2 rounded-[100px] bg-[#E6E8EC] breadscrumb">
                     <div v-if="breadcrumb && breadcrumb.length" v-for="(item, index) in breadcrumb" :key="item.label" @click="backToExam(breadcrumb)"

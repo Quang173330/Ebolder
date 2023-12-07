@@ -27,9 +27,9 @@
                 <div class="h-100 no-gutters row">
                     <div class="d-none d-xl-block col-xl-3 ">
                         <div class="flex items-center h-100 bg-no-repeat"
-                            style="background-image: url('images/login/login.png');">
+                            style="background-repeat: no-repeat;background-size: cover;background-image: url('images/login/login.png');">
                             <div class="d-flex flex-row align-items-center justify-content-center p-4">
-                                <img src="/images/login/logo.svg" alt="" />
+                                <img width="46px" height="46px" src="/images/login/logo.svg" alt="" />
                                 <div class="d-flex justify-content-center flex-column text-white font-weight-bold ml-2">
                                     <p class="m-0">If You Don’t Walk Today</p>
                                     <p class="m-0">You’ll Have To Run Tomorrow.</p>

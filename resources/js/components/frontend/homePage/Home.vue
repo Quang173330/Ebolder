@@ -39,9 +39,9 @@
                 <div
                     class="rounded-tl-[16px] rounded-tr-[56px] rounded-br-[16px] rounded-bl-[16px] border-2 border-solid border-[#F4F5F6] bg-[#FFF] p-12 flex flex-col justify-between">
                     <div>
-                        <h2 class="text-[22px] font-semibold mb-4">Four Exam Modules</h2>
+                        <h2 class="text-[22px] font-semibold mb-4">Four Test Modules</h2>
                         <p class="text-[16px] font-light">
-                            The set of four exam modules includes Listening, Reading, Vocabulary, Grammar, providing all
+                            The set of four test modules includes Listening, Reading, Vocabulary, Grammar, providing all
                             types
                             of questions.
                         </p>

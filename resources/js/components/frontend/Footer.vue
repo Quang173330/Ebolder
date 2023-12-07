@@ -3,7 +3,7 @@
         <div class="w-full grid grid-cols-1 xl:grid-cols-3 gap-8">
             <div>
                 <div class="flex items-center">
-                    <img src="/images/landing/logo.svg" alt="" />
+                    <img width="46px" height="46px" src="/images/landing/logo.svg" alt="" />
                     <div class="p-0 text-[14px] font-bold uppercase w-full xl:block ml-2">
                         <p class="whitespace-nowrap	">If You Don’t Walk Today</p>
                         <p class="whitespace-nowrap	">You’ll Have To Run Tomorrow.</p>

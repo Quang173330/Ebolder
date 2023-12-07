@@ -5,7 +5,7 @@
     </div>
     <div class="container w-full content relative">
       <div class="flex justify-between pt-3">
-        <p class="text-[24px]">Exam List</p>
+        <p class="text-[24px]">Test List</p>
         <div>
           <el-input v-model="searchName" class="border-2" style="border-color: #2162FF; border-radius: 5px;" placeholder="Search"></el-input>
         </div>
@@ -77,7 +77,7 @@ export default {
       searchName: "",
       filterData: null,
       breadcrumb: [
-          {label: 'Exam', icon: ExamIcon},
+          {label: 'Test', icon: ExamIcon},
       ]
     };
   },

@@ -128,7 +128,7 @@ export default {
             questions: null,
             skill: null,
             breadcrumb: [
-                { label: 'Exam', icon: ExamIcon },
+                { label: 'Test', icon: ExamIcon },
             ],
             timeWork: 45 * 60 * 1000,
             timerun: 0,

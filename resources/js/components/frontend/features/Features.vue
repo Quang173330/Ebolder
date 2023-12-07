@@ -59,6 +59,34 @@
             </div>
           </div>
         </div>
+
+        <div class="mt-3">
+          <p class="text-[24px] mb-4">Writing assessment</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class=" dic-item cursor-pointer"
+              v-for="(item, index) in writing"
+              :key="index"
+            > 
+              <a :href="item.link" target="_blank" class="flex items-center justify-between">
+                <div class="flex">
+                  <img src width="84" height="84" :src="writingImg" alt="">
+                  <div class="ml-2 justify-evenly flex flex-col">
+                    <div class="writing-tag">Writing assessment</div>
+                    <div class="text-[16px]">{{ item.name }}</div>
+                  </div>
+                </div>
+               
+                <div class="flex" style="white-space: nowrap;">
+                  <div class="hidden lg:block text-[14px]">Open in new tab</div>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.4697 16.5303C13.1768 16.2374 13.1768 15.7626 13.4697 15.4697L16.9393 12L13.4697 8.53033C13.1768 8.23744 13.1768 7.76256 13.4697 7.46967C13.7626 7.17678 14.2374 7.17678 14.5303 7.46967L18.5303 11.4697C18.8232 11.7626 18.8232 12.2374 18.5303 12.5303L14.5303 16.5303C14.2374 16.8232 13.7626 16.8232 13.4697 16.5303Z" fill="#141416"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M18.75 12C18.75 12.4142 18.4142 12.75 18 12.75L6 12.75C5.58579 12.75 5.25 12.4142 5.25 12C5.25 11.5858 5.58579 11.25 6 11.25L18 11.25C18.4142 11.25 18.75 11.5858 18.75 12Z" fill="#141416"/>
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -76,6 +104,7 @@ export default {
       ],
       dicsImg: require('../../../../../public/images/landing/dics.svg'),
       gameImg: require('../../../../../public/images/landing/game-icon.svg'),
+      writingImg: require('../../../../../public/images/landing/writing.svg'),
       dics: [
         {
           name: "Oxford Learner's Dictionaries",
@@ -187,6 +216,56 @@ export default {
           name: "English Vocab **",
           link: 'https://quizizz.com/embed/quiz/6534f297845397c7ef8c7a78'
         },
+        {
+          name: "Because AND although",
+          link: 'https://quizizz.com/embed/quiz/6570a353cc66a8e3d242b5ab'
+        },
+        {
+          name: "Passive VOICE 2",
+          link: 'https://quizizz.com/embed/quiz/6570a3c8cacfaf87722227ef'
+        },
+        {
+          name: "Jobs",
+          link: 'https://quizizz.com/embed/quiz/6570a44968c54409a4e6ad84'
+        },
+        {
+          name: "Travel vocabulary",
+          link: 'https://quizizz.com/embed/quiz/6570a520647ff7027bb1fd89'
+        },
+        {
+          name: "Capital Cities",
+          link: 'https://quizizz.com/embed/quiz/6570a59832522a2227592694'
+        },
+      ],
+      writing: [
+      {
+          name: "Grammarly",
+          link: 'https://app.grammarly.com/'
+        },
+        {
+          name: "Paperpal",
+          link: 'https://edit.paperpal.com/sign-up  '
+        },
+        {
+          name: "Write&improve",
+          link: 'https://writeandimprove.com/'
+        },
+        {
+          name: "Write-and-improve",
+          link: 'https://www.cambridgeenglish.org/vn/learning-english/write-and-improve/'
+        },
+        {
+          name: "Text Inspector",
+          link: 'https://textinspector.com/ '
+        },
+        {
+          name: "Quillbot",
+          link: 'https://quillbot.com/'
+        },
+        {
+          name: "Paraphrasing Tool",
+          link: 'https://paraphrasing-tool.com/'
+        },
       ]
     };
   },
@@ -210,6 +289,19 @@ export default {
 .game-tag {
   background-color: #cae8d4;
   color: #24B24C;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 171.429% */
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  width: fit-content;
+  border-radius: 5px;
+  padding: 3px 5px;
+}
+.writing-tag {
+  background-color: #e5cedf;
+  color: #AA3181;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;

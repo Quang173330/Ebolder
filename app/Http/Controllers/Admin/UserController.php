@@ -31,11 +31,26 @@ class UserController extends Controller
         $params = $request->all();
         $params['page_size'] =  $params['page_size'] ?? 10;
         try {
+            $userInfo = auth()->user();
             $isAdmin = true;
             $users = User::query();
             if(isset($params['search']) && trim($params['search'])) {
-                $user = $users->where('name', 'like', '%' . $params['search'] . '%');
+                $users = $users->where('name', 'like', '%' . $params['search'] . '%');
             }
+            if ($userInfo->is_admin !=1 ) {
+                $users = $users->whereNotIn('is_admin', [1,2]);
+            }
+            if ($request->type !=1 ) {
+                $history = ExamHistoryFinal::select('user_id', DB::raw('count(*) as total'))->groupBy('user_id')->pluck('user_id')->toArray();
+                $historyStudy = HistoryLearn::select('user_id', DB::raw('count(*) as total'))->groupBy('user_id')->pluck('user_id')->toArray();
+                $listUser = array_merge($history, $historyStudy);
+                if ($request->type == 2) {
+                    $users = $users->whereIn('id', $listUser);
+                } elseif ($request->type == 3) {
+                    $users = $users->whereNotIn('id', $listUser);
+                }
+            }
+            
             $users = $users->paginate($params['page_size'], ['*'], 'page', $params['page_number'] ?? 1);
             if (Gate::allows('User_Edit')) {
                 $isAdmin = true;
@@ -50,6 +65,7 @@ class UserController extends Controller
                 "message" => "Lấy user Thành công!"
             ]);
         }catch (\Exception $e){
+            Log::error($e);
             return response()->json([
                 "status" => 500,
                 "errorCode" => 500,

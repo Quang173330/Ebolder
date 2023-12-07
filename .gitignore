@@ -13,6 +13,5 @@ yarn-error.log
 public/css/app.css
 public/js/app.js
 public/upload/*
-public/images
 public/mix-manifest.json
 public/js/app.js.LICENSE.txt

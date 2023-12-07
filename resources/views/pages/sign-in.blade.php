@@ -42,7 +42,7 @@
                             class="p-4 d-flex justify-content-between align-items-center flex-xl-row flex-md-row flex-column">
                             <div class="mb-4">
                                 <div class="d-flex flex-row d-xl-none d-md-flex">
-                                    <img src="/images/login/logo.svg" alt="" />
+                                    <img width="46px" height="46px" src="/images/login/logo.svg" alt="" />
                                     <div
                                         class="d-flex justify-content-center flex-column text-body font-weight-bold ml-2">
                                         <p class="m-0">If You Don’t Walk Today</p>

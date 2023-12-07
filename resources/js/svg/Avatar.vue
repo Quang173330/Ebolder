@@ -1,5 +1,5 @@
 <template>
-   <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <svg width="40" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g clip-path="url(#clip0_2644_14356)">
 <rect x="2" y="2" width="46" height="46" rx="23" fill="white"/>
 <circle cx="25" cy="25" r="31.25" fill="url(#paint0_linear_2644_14356)"/>

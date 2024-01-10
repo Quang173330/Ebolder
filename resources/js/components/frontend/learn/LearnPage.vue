@@ -15,7 +15,7 @@
       <div class="flex max-h-full sidebar z-10 border-r-2" :class="[!open ? 'hidden' : ' w-[350px] block']" >
         <!-- Sidebar -->
         <div class="flex w-full overflow-auto">
-          
+
           <!-- Sidebar Content -->
             <div ref="content" class="bg-white  listLesson"
             :class="[open ? 'w-[350px]' : 'w-0 hidden']">
@@ -53,6 +53,48 @@
               <p class="text-center text-[14px]">Score</p>
               <p  class="text-center text-[14px] rounded mt-2 px-2 font-bold" style="background-color: #E6E8EC;">{{ scores }}</p>
             </div>
+          </div>
+          <div v-if="this.lessonType != 'listening'" class="mt-3">
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Status</th>
+                <th scope="col">Your Answer</th>
+                <th scope="col">Correct Answer</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="(item, index) in lessonQuestions">
+                <th scope="row">{{ index + 1 }}</th>
+                <td>{{ getStatus(item) }}</td>
+                <td>{{ getYourAnswer(item) }}</td>
+                <td>{{ getCorrectAnswer(item) }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-if="this.lessonType == 'listening'" class="mt-3">
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">Topic</th>
+                <th scope="col">No</th>
+                <th scope="col">Status</th>
+                <th scope="col">Your Answer</th>
+                <th scope="col">Correct Answer</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="item in listeningQuestions">
+                <th scope="row">{{ Number(item.topic_index) + 1 }}</th>
+                <td>{{ Number(item.question_index) + 1 }}</td>
+                <td>{{ getStatus(item) }}</td>
+                <td>{{ getYourListeningAnswer(item) }}</td>
+                <td>{{ getCorrectListeningAnswer(item) }}</td>
+              </tr>
+              </tbody>
+            </table>
           </div>
           <div class="flex justify-center mt-5 ">
             <a href="/" class="flex py-2 cursor-pointer justify-center" style="width: 50%">
@@ -121,7 +163,11 @@ export default {
       breadcrumb: [
         { label: 'Study', icon: ExamIcon },
       ],
-      selectedLessonName: ''
+      selectedLessonName: '',
+      results: [],
+      selectedAnswers: {},
+      inputAnswerValues: {},
+      listeningQuestions: [],
     };
   },
   watch: {
@@ -132,6 +178,80 @@ export default {
     }
     },
   methods: {
+    async getAudioDetail(audioId) {
+      try {
+        let rs = await baseRequest.get(`/admin/get-detail-audio-question-listening/${audioId}`);
+        if (rs.data.status == 200) {
+          const data = rs.data.data;
+          if (data) {
+            return data?.question_listening;
+          }
+          return null;
+        }
+        return null;
+      } catch (e) {
+      } finally {
+      }
+    },
+    getYourAnswer(item) {
+      const id = item.id;
+      const answers = item.answers;
+      if (item.type === 1) {
+        const answerId = this.selectedAnswers[id];
+        const answer = answers.find((el) => {
+          return el.answer_id === answerId;
+        });
+        return answer?.text;
+      } else {
+        return this.inputAnswerValues[id] ?? '';
+      }
+    },
+    getCorrectAnswer(item) {
+      if(item.answers?.length === 1) {
+        return item.answers[0].text
+      } else {
+        const answerId = item.right_answers.answer_id;
+        const answer = item.answers.find((el) => {
+          return el.answer_id === answerId;
+        });
+
+        return answer.text;
+      }
+    },
+    getCorrectListeningAnswer(item) {
+      if(item.answer_listening?.length === 1) {
+        return item.answer_listening[0].text
+      } else {
+        const answerId = item.right_answers.answer_id;
+        const answer = item.answer_listening.find((el) => {
+          return el.answer_id === answerId;
+        });
+
+        return answer.text;
+      }
+    },
+    getYourListeningAnswer(item) {
+      const id = item.id;
+      const answers = item.answer_listening;
+      if (item.type === 1) {
+        const answerId = this.selectedAnswers[id];
+        const answer = answers.find((el) => {
+          return el.answer_id === answerId;
+        });
+        return answer?.text;
+      } else {
+        return this.inputAnswerValues[id] ?? '';
+      }
+    },
+    getStatus(item) {
+      const result = this.results[item.id] ?? [];
+      let keys = Object.keys(result);
+      if (keys.length > 0) {
+        let firstKey = keys[0];
+        return result[firstKey];
+      }
+      return false;
+    },
     formatResultTime(mili) {
       return $Helper.millisToMinutesAndSeconds(mili);
     },
@@ -157,7 +277,7 @@ export default {
             speaking: rs.data.data?.speak,
             vocabulary: rs.data.data?.vocabulary,
           };
-          
+
           if (data) {
             this.listLevel = data[this.lessonType];
           }
@@ -222,7 +342,11 @@ export default {
         loading.close();
       }
     },
-    async submit(correctAnswers, questionCount) {
+    async submit(correctAnswers, questionCount, results, selectedAnswers, inputAnswerValues) {
+      this.results = results;
+      this.selectedAnswers = selectedAnswers;
+      this.inputAnswerValues = inputAnswerValues;
+      console.log(this.inputAnswerValues);
       this.scores = `${correctAnswers}/${questionCount}`;
       const requestParams = {
         test_type: this.query.skill ?? '',
@@ -251,6 +375,30 @@ export default {
       let newData = this.lessonQuestions.find(item => item.id === audioId);
       this.lessonContent.description = newData.content;
     },
+    async getListeningQuestions() {
+      let questions = [];
+      if (this.lessonType === 'listening') {
+        for (let [index, item] of Object.entries(this.lessonQuestions)) {
+          try {
+            let rs = await baseRequest.get(`/admin/get-detail-audio-question-listening/${item.id}`);
+            if (rs.data.status == 200) {
+              const data = rs.data.data;
+              if (data) {
+                let listenQuestions = data?.question_listening;
+                for (let i = 0; i < listenQuestions.length; i++) {
+                  listenQuestions[i]['topic_index'] = index;
+                  listenQuestions[i]['question_index'] = i;
+                }
+                questions = questions.concat(listenQuestions);
+              }
+            }
+          } catch (e) {
+          } finally {
+          }
+        }
+      }
+      this.listeningQuestions = questions;
+    }
   },
   async created() {
     const { skill, levelId, levelName } = this.query;
@@ -264,11 +412,14 @@ export default {
     }]
     this.begin = Date.now();
     await this.getDetailLevel();
-    await this.getLessonDetail(this.listLevel[0]?.id, this.listLevel[0]?.name)
+    await this.getLessonDetail(this.listLevel[0]?.id, this.listLevel[0]?.name);
+    await this.getListeningQuestions();
   },
   async mounted() {
     let x = await localStorage.getItem('section-list-show')
     this.open = Number(x)
+  },
+  computed: {
   }
 };
 </script>
@@ -368,4 +519,3 @@ export default {
     display: block;
   }
 }</style>
-  

@@ -107,6 +107,7 @@ export default {
         handleSelectAnswer(answerId, questionId) {
             this.selectedAnswerId = answerId;
             const rightAnswer = this.selectedQuestion.right_answers.answer_id;
+            this.$emit('update-selected-answer', questionId, answerId);
 
             this.$set(this.results, questionId, {});
 
@@ -114,8 +115,10 @@ export default {
                 this.$set(this.selectedAnswers, questionId, answerId);
                 if (answerId == rightAnswer) {
                     this.results[questionId][answerId] = true;
+                    this.$emit('update-result', questionId, true);
                 } else {
                     this.results[questionId][answerId] = false;
+                    this.$emit('update-result', questionId, false);
                 }
             }
             this.saveResult();
@@ -131,15 +134,18 @@ export default {
             const questionId = question.id;
             // store value of each input
             this.$set(this.inputAnswerValues, `${elementIndex}${question.id}`, event.target.value)
-            
-            if (!this.results[questionId]) {
+            this.$emit('update-input-answer', questionId, inputText);
+
+          if (!this.results[questionId]) {
                 this.$set(this.results, questionId, {});
             }
             
             if(rightAnswer == inputText) {
                 this.results[questionId][answerId] = true;
+                this.$emit('update-result', questionId, true);
             } else {
                 this.results[questionId][answerId] = false;
+                this.$emit('update-result', questionId, false);
             }
 
             if(event.target.value || event.target.value != '' ) {

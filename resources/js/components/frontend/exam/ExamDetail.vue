@@ -77,7 +77,7 @@
                         <tr>
                           <th scope="col">Topic</th>
                           <th scope="col">No</th>
-                          <th scope="col">Status</th>
+                          <th scope="col">Result</th>
                           <th scope="col">Your Answer</th>
                           <th scope="col">Correct Answer</th>
                         </tr>
@@ -102,7 +102,7 @@
                         <thead>
                         <tr>
                           <th scope="col">No</th>
-                          <th scope="col">Status</th>
+                          <th scope="col">Result</th>
                           <th scope="col">Your Answer</th>
                           <th scope="col">Correct Answer</th>
                         </tr>
@@ -126,7 +126,7 @@
                         <thead>
                         <tr>
                           <th scope="col">No</th>
-                          <th scope="col">Status</th>
+                          <th scope="col">Result</th>
                           <th scope="col">Your Answer</th>
                           <th scope="col">Correct Answer</th>
                         </tr>
@@ -150,7 +150,7 @@
                         <thead>
                         <tr>
                           <th scope="col">No</th>
-                          <th scope="col">Status</th>
+                          <th scope="col">Result</th>
                           <th scope="col">Your Answer</th>
                           <th scope="col">Correct Answer</th>
                         </tr>
@@ -308,9 +308,10 @@ export default {
           let keys = Object.keys(result);
           if (keys.length > 0) {
             let firstKey = keys[0];
-            return result[firstKey];
+            let status = result[firstKey];
+            return status.toString() === 'true' ? 'Right Answer' : 'Wrong Answer';
           }
-          return false;
+          return 'Wrong Answer';
         },
         async getListeningQuestions() {
           let questions = [];

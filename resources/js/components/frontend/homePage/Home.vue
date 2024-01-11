@@ -84,9 +84,6 @@
             </div>
         </div>
         <div class="w-full my-[16px] xl:my-[48px]">
-            <h2 class="text-[28px] xl:text-[42px] font-semibold leading-[120%] text-center my-[16px] xl:my-[48px]">
-                <p class="text-center">Make faster, easier...</p>
-            </h2>
             <div class="xl:w-[62.5%] w-[95%] mx-auto grid md:grid-cols-3 gap-4 grid-cols-1">
                 <img class="m-auto custom-image" :src="dictionary" />
                 <img class="m-auto custom-image" :src="pronunciation" />

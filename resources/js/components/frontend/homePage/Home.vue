@@ -32,9 +32,9 @@
                             Learners who achieve A2 Pre-intermediate level:
                           </span>
                           <ul style="list-style: disc; margin-left: 20px;">
-                            <li style="text-align: justify" class="mt-3">can understand sentences and common expressions about familiar topics, including very basic personal and family information, shopping, places of interest and work</li>
-                            <li style="text-align: justify" class="mt-3">can communicate in simple, everyday tasks that require only simple and direct exchanges of information on familiar topics</li>
-                            <li style="text-align: justify" class="mt-3">can describe aspects of their past, environment and matters related to their immediate needs, using simple language.</li>
+                            <li class="mt-3">can understand sentences and common expressions about familiar topics, including very basic personal and family information, shopping, places of interest and work</li>
+                            <li class="mt-3">can communicate in simple, everyday tasks that require only simple and direct exchanges of information on familiar topics</li>
+                            <li class="mt-3">can describe aspects of their past, environment and matters related to their immediate needs, using simple language.</li>
                           </ul>
                         </div>
                     </div>
@@ -51,10 +51,10 @@
                             Learners who achieve B1 Intermediate level:
                           </span>
                           <ul style="list-style: disc; margin-left: 20px;">
-                            <li style="text-align: justify" class="mt-3">can understand the main points of clear texts on familiar topics in standard language</li>
-                            <li style="text-align: justify" class="mt-3">can manage most situations on a trip to places where English is used</li>
-                            <li style="text-align: justify" class="mt-3">can produce simple, organised texts about familiar topics</li>
-                            <li style="text-align: justify" class="mt-3">can describe experiences, events, wishes and aspirations, and explain opinions and plans.</li>
+                            <li class="mt-3">can understand the main points of clear texts on familiar topics in standard language</li>
+                            <li class="mt-3">can manage most situations on a trip to places where English is used</li>
+                            <li class="mt-3">can produce simple, organised texts about familiar topics</li>
+                            <li class="mt-3">can describe experiences, events, wishes and aspirations, and explain opinions and plans.</li>
                           </ul>
                         </div>
                     </div>
@@ -71,9 +71,9 @@
                             Learners who achieve B2 Upper intermediate level:
                           </span>
                           <ul style="list-style: disc; margin-left: 20px;">
-                            <li style="text-align: justify" class="mt-3">can understand the main ideas of complex texts on concrete or abstract topics, including some technical discussions</li>
-                            <li style="text-align: justify" class="mt-3">can express themselves fluently and spontaneously enough to comfortably communicate with other English speakers</li>
-                            <li style="text-align: justify" class="mt-3">can produce clear, detailed text on many subjects and explain a complex viewpoint on a topic, including expressing advantages and disadvantages.</li>
+                            <li class="mt-3">can understand the main ideas of complex texts on concrete or abstract topics, including some technical discussions</li>
+                            <li class="mt-3">can express themselves fluently and spontaneously enough to comfortably communicate with other English speakers</li>
+                            <li class="mt-3">can produce clear, detailed text on many subjects and explain a complex viewpoint on a topic, including expressing advantages and disadvantages.</li>
                           </ul>
                         </div>
                     </div>

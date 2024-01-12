@@ -197,8 +197,8 @@ export default {
       }
     },
     getYourAnswer(item) {
-      const id = item.id;
-      const answers = item.answers;
+      const id = item?.id;
+      const answers = item?.answers;
       if (item.type === 1) {
         const answerId = this.selectedAnswers[id];
         const answer = answers.find((el) => {
@@ -213,7 +213,7 @@ export default {
       if(item.answers?.length === 1) {
         return item.answers[0].text
       } else {
-        const answerId = item.right_answers.answer_id;
+        const answerId = item.right_answers?.answer_id;
         const answer = item.answers.find((el) => {
           return el.answer_id === answerId;
         });
@@ -225,7 +225,7 @@ export default {
       if(item.answer_listening?.length === 1) {
         return item.answer_listening[0].text
       } else {
-        const answerId = item.right_answers.answer_id;
+        const answerId = item.right_answers?.answer_id;
         const answer = item.answer_listening.find((el) => {
           return el.answer_id === answerId;
         });
@@ -252,7 +252,6 @@ export default {
       if (keys.length > 0) {
         let firstKey = keys[0];
         let status = result[firstKey];
-        console.log(status);
         return status ? 'Right Answer' : 'Wrong Answer';
       }
       return 'Wrong Answer';

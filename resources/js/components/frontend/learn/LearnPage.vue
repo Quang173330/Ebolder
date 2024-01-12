@@ -175,8 +175,13 @@ export default {
         handler(value) {
             localStorage.setItem('section-list-show', value ? 1 : 0)
         }
-    }
     },
+    "lessonQuestions": {
+      handler(value) {
+        this.getListeningQuestions();
+      }
+    }
+  },
   methods: {
     handleRedirect() {
       window.location.href = window.location.href;
@@ -184,8 +189,8 @@ export default {
     async getAudioDetail(audioId) {
       try {
         let rs = await baseRequest.get(`/admin/get-detail-audio-question-listening/${audioId}`);
-        if (rs.data.status == 200) {
-          const data = rs.data.data;
+        if (rs.data?.status == 200) {
+          const data = rs.data?.data;
           if (data) {
             return data?.question_listening;
           }
@@ -218,7 +223,7 @@ export default {
           return el.answer_id === answerId;
         });
 
-        return answer.text;
+        return answer?.text;
       }
     },
     getCorrectListeningAnswer(item) {
@@ -230,7 +235,7 @@ export default {
           return el.answer_id === answerId;
         });
 
-        return answer.text;
+        return answer?.text;
       }
     },
     getYourListeningAnswer(item) {
@@ -309,32 +314,35 @@ export default {
             this.lessonContent = rs.data.data;
             this.lessonQuestions = rs.data.data['topic_audio_listen']
           } else if (this.lessonType == 'pronunciation') {
-            rs.data.data[`question_${this.lessonType}`].forEach(function(item) {
-                item.answers = item.answer_pronunciation;
-                delete item.answer_pronunciation;
-                item.right_answers = item.right_answer_pronunciation;
-                delete item.right_answer_pronunciation;
+            rs.data.data[`question_${this.lessonType}`].forEach(function (item) {
+              item.answers = item.answer_pronunciation;
+              delete item.answer_pronunciation;
+              item.right_answers = item.right_answer_pronunciation;
+              delete item.right_answer_pronunciation;
             });
             this.lessonContent = rs.data.data;
             this.lessonQuestions = rs.data.data[`question_${this.lessonType}`];
           } else if (this.lessonType == 'reading') {
-            rs.data.data[`question_${this.lessonType}`].forEach(function(item) {
-                item.answers = item.answer_reading;
-                delete item.answer_reading;
-                item.right_answers = item.right_answer_reading;
-                delete item.right_answer_reading;
+            rs.data.data[`question_${this.lessonType}`].forEach(function (item) {
+              item.answers = item.answer_reading;
+              delete item.answer_reading;
+              item.right_answers = item.right_answer_reading;
+              delete item.right_answer_reading;
             });
             this.lessonContent = rs.data.data;
             this.lessonQuestions = rs.data.data[`question_${this.lessonType}`];
           } else if (this.lessonType == 'writing') {
-            rs.data.data['question_lesson'].forEach(function(item) {
-                item.answers = item.answer_lesson;
-                delete item.answer_lesson;
-                item.right_answers = item.right_answer_lesson;
-                delete item.right_answer_lesson;
+            rs.data.data['question_lesson'].forEach(function (item) {
+              item.answers = item.answer_lesson;
+              delete item.answer_lesson;
+              item.right_answers = item.right_answer_lesson;
+              delete item.right_answer_lesson;
             });
             this.lessonContent = rs.data.data;
             this.lessonQuestions = rs.data.data['question_lesson'];
+          } else if (this.lessonType == 'speaking'){
+            this.lessonContent = rs.data.data;
+            this.lessonQuestions = rs.data.data['question_speak'];
           } else {
             this.lessonContent = rs.data.data;
             this.lessonQuestions = rs.data.data[`question_${this.lessonType}`];

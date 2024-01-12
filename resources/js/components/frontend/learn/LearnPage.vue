@@ -252,7 +252,8 @@ export default {
       if (keys.length > 0) {
         let firstKey = keys[0];
         let status = result[firstKey];
-        return status.toString() === 'true' ? 'Right Answer' : 'Wrong Answer';
+        console.log(status);
+        return status ? 'Right Answer' : 'Wrong Answer';
       }
       return 'Wrong Answer';
     },

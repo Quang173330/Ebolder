@@ -267,15 +267,14 @@ export default {
         },
         getCorrectAnswer(item) {
           if(item.answers?.length === 1) {
-            console.log('f');
-            return item.answers[0].text
+            return item.answers[0]?.text
           } else {
-            const answerId = item.right_answers.answer_id;
+            const answerId = item.right_answers?.answer_id;
             const answer = item.answers.find((el) => {
               return el.answer_id === answerId;
             });
 
-            return answer.text;
+            return answer?.text;
           }
         },
         getCorrectListeningAnswer(item) {
@@ -304,14 +303,10 @@ export default {
           }
         },
         getStatus(item) {
-          const result = this.results[item.id] ?? [];
-          let keys = Object.keys(result);
-          if (keys.length > 0) {
-            let firstKey = keys[0];
-            let status = result[firstKey];
-            return status.toString() === 'true' ? 'Right Answer' : 'Wrong Answer';
-          }
-          return 'Wrong Answer';
+          const status = this.results[item.id] ?? false;
+          console.log(status);
+
+          return status ? 'Right Answer' : 'Wrong Answer';
         },
         async getListeningQuestions() {
           let questions = [];

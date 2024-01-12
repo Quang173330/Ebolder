@@ -211,6 +211,24 @@ export default {
                 this.results = {};
             }
         }
+    },
+
+    created() {
+      console.log('f');
+      if (this.questions && this.questions.length) {
+        console.log('fx');
+        // reset data
+        this.selectedAnswers = {};
+        this.correctAnswers = {};
+        this.selectedIndex = 0;
+        this.questionCount = 0;
+
+        this.selectedQuestion = this.questions[this.selectedIndex];
+        this.questions.forEach(question => {
+          this.answerEachInputQuestion[question.id] = question.question.split("#").length - 1;
+          this.questionCount += 1
+        })
+      }
     }
 }
 </script>

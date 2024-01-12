@@ -3,7 +3,7 @@
     <div class="sticky inset-x-0 top-0 bg-white z-50">
       <main-header-component :user="user" :breadcrumb="breadcrumb"/>
     </div>
-    <div v-show="!showResult" class="w-full h-full sm:overflow-hidden overflow-y-auto content content gap-4">
+    <div v-if="!showResult" class="w-full h-full sm:overflow-hidden overflow-y-auto content content gap-4">
       <button @click="toggle()" :class="[open ? 'hidden' : 'block']"
         class="focus:outline-none transition-color duration-700 sidebarButton absolute">
         <span class="block transform origin-center font-bold">
@@ -34,7 +34,7 @@
         <Questions :questions="lessonQuestions" :lessonType="lessonType" :onSubmit="submit" v-if="this.lessonType != 'listening'"/>
       </div>
     </div>
-    <div v-show="showResult" class="flex justify-center">
+    <div v-if="showResult" class="flex justify-center">
         <div class="max-w-[736px] mt-5 bg-white min-h-fit p-4" style="width: 90%;">
           <div class="flex">
             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">

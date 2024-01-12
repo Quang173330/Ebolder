@@ -10,7 +10,7 @@
                 @handleExam="handleSelectedSkill"
             />
         </div>
-        <div v-show="!showResult" class="flex flex-row gap-4  w-full h-full sm:overflow-hidden overflow-y-auto content">
+        <div v-if="!showResult" class="flex flex-row gap-4  w-full h-full sm:overflow-hidden overflow-y-auto content">
             <button @click="toggle()" :class="[open ? 'hidden' : 'block']"
                 class="focus:outline-none transition-color duration-700 sidebarButton absolute">
                 <span class="block transform origin-center font-bold">
@@ -50,7 +50,7 @@
                 />
             </div>
         </div>
-        <div v-show="showResult" class="flex justify-center">
+        <div v-if="showResult" class="flex justify-center">
             <div class="max-w-[736px] mt-5 bg-white min-h-fit p-4" style="width: 90%;">
                 <div class="flex items-center">
                     <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -257,7 +257,7 @@ export default {
           const answers = item.answers;
           if (item.type === 1) {
             const answerId = this.selectedAnswers[id];
-            const answer = answers.find((el) => {
+            const answer = answers?.find((el) => {
               return el.answer_id === answerId;
             });
             return answer?.text;
@@ -279,14 +279,14 @@ export default {
         },
         getCorrectListeningAnswer(item) {
           if(item.answer_listening?.length === 1) {
-            return item.answer_listening[0].text
+            return item.answer_listening[0]?.text
           } else {
-            const answerId = item.right_answers.answer_id;
-            const answer = item.answer_listening.find((el) => {
+            const answerId = item.right_answers?.answer_id;
+            const answer = item.answer_listening?.find((el) => {
               return el.answer_id === answerId;
             });
 
-            return answer.text;
+            return answer?.text;
           }
         },
         getYourListeningAnswer(item) {
@@ -294,7 +294,7 @@ export default {
           const answers = item.answer_listening;
           if (item.type === 1) {
             const answerId = this.selectedAnswers[id];
-            const answer = answers.find((el) => {
+            const answer = answers?.find((el) => {
               return el.answer_id === answerId;
             });
             return answer?.text;
@@ -304,7 +304,6 @@ export default {
         },
         getStatus(item) {
           const status = this.results[item.id] ?? false;
-          console.log(status);
 
           return status ? 'Right Answer' : 'Wrong Answer';
         },

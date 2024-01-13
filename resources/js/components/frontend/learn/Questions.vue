@@ -143,7 +143,7 @@ export default {
             const questionId = question.id;
             // store value of each input
             this.$set(this.inputAnswerValues, `${elementIndex}${question.id}`, event.target.value)
-            this.$set(this.typingAnswers, questionId, event.target.value)
+            this.$set(this.typingAnswers, `${Number(inputIndex) + 1}${questionId}`, event.target.value)
 
             if (!this.results[questionId]) {
                 this.$set(this.results, questionId, {});

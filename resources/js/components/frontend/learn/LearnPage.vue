@@ -65,8 +65,8 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="(item, index) in lessonQuestions">
-                <th scope="row">{{ index + 1 }}</th>
+              <tr v-for="(item, index) in formattedQuestions">
+                <th scope="row">{{ getNo(item, index) }}</th>
                 <td>{{ getStatus(item) }}</td>
                 <td>{{ getYourAnswer(item) }}</td>
                 <td>{{ getCorrectAnswer(item) }}</td>
@@ -103,7 +103,7 @@
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M5.25 12C5.25 11.5858 5.58579 11.25 6 11.25L18 11.25C18.4142 11.25 18.75 11.5858 18.75 12C18.75 12.4142 18.4142 12.75 18 12.75L6 12.75C5.58579 12.75 5.25 12.4142 5.25 12Z" fill="#141416"/>
               </svg>
               <span class="ml-2">
-                Quay lại
+                Back
               </span>
             </a>
             <a  href="/history" :class="[`flex bg-${lessonType} py-2 rounded cursor-pointer justify-center` ]" style="width: 50%">
@@ -201,6 +201,18 @@ export default {
       } finally {
       }
     },
+
+    getNo(item) {
+      if (item.type === 1) {
+        return item.index;
+      }
+
+      if (item.answers?.length === 1) {
+        return item.index;
+      }
+
+      return `${item.index}.${item.answer_index}`;
+    },
     getYourAnswer(item) {
       const id = item?.id;
       const answers = item?.answers;
@@ -211,18 +223,21 @@ export default {
         });
         return answer?.text;
       } else {
-        return this.inputAnswerValues[id] ?? '';
+        return this.inputAnswerValues[item.key] ?? '';
       }
     },
     getCorrectAnswer(item) {
-      if(item.answers?.length === 1) {
-        return item.answers[0].text
-      } else {
+      if (item.type === 1) {
         const answerId = item.right_answers?.answer_id;
         const answer = item.answers.find((el) => {
           return el.answer_id === answerId;
         });
-
+        return answer?.text;
+      } else {
+        const answerId = item.answer_key?.answer_id;
+        const answer = item.answers.find((el) => {
+          return el.answer_id === answerId;
+        });
         return answer?.text;
       }
     },
@@ -254,9 +269,14 @@ export default {
     getStatus(item) {
       const result = this.results[item.id] ?? [];
       let keys = Object.keys(result);
-      if (keys.length > 0) {
+      if (keys.length === 1) {
         let firstKey = keys[0];
         let status = result[firstKey];
+        return status ? 'Right Answer' : 'Wrong Answer';
+      }
+
+      if (keys.length > 1) {
+        let status = result[item.answer_key?.answer_id];
         return status ? 'Right Answer' : 'Wrong Answer';
       }
       return 'Wrong Answer';
@@ -432,6 +452,35 @@ export default {
     this.open = Number(x)
   },
   computed: {
+    formattedQuestions() {
+      if (this.lessonType == 'listening') {
+        return [];
+      }
+
+      if (!this.showResult) {
+        return [];
+      }
+
+      let data = [];
+      for (const [index, item] of this.lessonQuestions.entries()) {
+        if (item.type === 1) {
+          const newItem = { ...item };
+          newItem.index = index + 1;
+          data.push(newItem);
+        } else {
+          for (const answerIndex in item.answers) {
+            const newItem = { ...item }; // Shallow copy using the spread operator
+            newItem.key = `${Number(answerIndex) + 1}${item.id}`;
+            newItem.answer_key = item.answers[answerIndex];
+            newItem.answer_index = Number(answerIndex) + 1;
+            newItem.index = index + 1;
+            data.push(newItem);
+          }
+        }
+      }
+
+      return data;
+    }
   }
 };
 </script>

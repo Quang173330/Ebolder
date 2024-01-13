@@ -157,8 +157,7 @@ export default {
         },
         handleNavigateToLearn() {
             if(!this.selectedLevel || !this.selectedSkill) return;
-            console.log();
-            window.open(`${$Api.baseUrl}/learn?levelName=${this.selectedLevel?.name}&levelId=${this.selectedLevel?.id}&skill=${this.selectedSkill}`);
+            window.location.href = `${$Api.baseUrl}/learn?levelName=${this.selectedLevel?.name}&levelId=${this.selectedLevel?.id}&skill=${this.selectedSkill}`;
         }
     },
 }

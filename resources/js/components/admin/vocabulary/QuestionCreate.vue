@@ -61,6 +61,7 @@
                             border: 1px solid #000 !important;
                         }	`,
                         paste_data_images: true,
+                        branding: false,
                         }"
                     />
                     <!-- <el-form-item label="Description" prop="description" :rules="[

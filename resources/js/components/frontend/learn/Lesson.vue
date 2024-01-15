@@ -37,7 +37,8 @@ export default {
                 plugins: "pagebreak autoresize",
                 menubar: "",
                 toolbar: "",
-                resize: false
+                resize: false,
+                branding: false,
             };
         },
     }

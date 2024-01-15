@@ -471,6 +471,7 @@ export default {
   methods: {
     init() {
       return {
+        branding: false,
         plugins: "image media link tinydrive code imagetools",
         height: 600,
         toolbar:

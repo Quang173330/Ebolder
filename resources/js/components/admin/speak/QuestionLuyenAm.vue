@@ -50,6 +50,7 @@
     		border: 1px solid #000 !important;
 		}	`,
                     paste_data_images: true,
+                    branding: false,
                   }"
                 />
               </div>

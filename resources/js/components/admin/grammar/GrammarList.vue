@@ -169,7 +169,7 @@ export default {
       pageSize: 1,
       perPage: 10,
       textSearch: '',
-      timeOut: null
+      timeOut: null,
     };
   },
   computed: {},
@@ -177,6 +177,7 @@ export default {
   methods: {
     init() {
       return {
+        branding: false,
         plugins: "image media link tinydrive code imagetools",
         height: 400,
         toolbar:
